@@ -5,46 +5,63 @@ import java.util.ArrayList;
 import model.Candidates;
 import model.algorithm.ElGamal;
 import model.algorithm.Paillier;
+import model.state.*;
 
-public class VotingController {
+public class SystemController {
 	
-	private static VotingController instance;
+	private static SystemController instance;
 	
 	private String[] msgArray;
 	private ArrayList <ElGamal> elGamalVotes;
 	private Paillier pSystem;
 	
-	private VotingController(){	
-		
-		// five votes
-		elGamalVotes = new ArrayList <ElGamal>();
-		pSystem = new Paillier();
-		msgArray = new String[]{"00001000", "10000100"};
-
-
-		for (int i=0; i<msgArray.length; i++) {
-			
-			System.out.println("decimalValue: " + Integer.parseInt(msgArray[i], 2));    
-			convertStringToBinary(msgArray[i]);//could be used for mix net
-			
-			elGamalVotes.add(new ElGamal(msgArray[i]));
-			
-			
-			
-		}
-		
-		pSystem.pallierReceive(msgArray);
-		
-        
-	}
+	private IAppState appState;
 	
-	public static synchronized VotingController getInstance() {
+	public static synchronized SystemController getInstance() {
 		if (instance == null) {
-			instance = new VotingController();
+			instance = new SystemController();
 		}
 		return instance;
 	} 
 	
+	private SystemController(){
+		setAppState(StateRegistration.getInstance());
+	}
+	
+	public void setupVoter() {
+		startAction(this);		
+	}	
+
+	public void doVoting() {
+		
+		setAppState(StateVoting.getInstance());
+		
+		// five votes
+		elGamalVotes = new ArrayList <ElGamal>();
+		pSystem = new Paillier();
+		msgArray = new String[]{
+				"10", 
+				"10100",
+				"0",
+				"1000",
+				"1001",
+				"1010",
+				"1100",
+				"1010",
+				"1"
+				};
+
+
+		for (int i=0; i<msgArray.length; i++) {			
+			//UIController.getInstance().out("decimalValue: " + Integer.parseInt(msgArray[i], 2));    
+			//convertStringToBinary(msgArray[i]);//could be used for mix net			
+			//elGamalVotes.add(new ElGamal(msgArray[i]));	
+		}
+		
+		pSystem.paillierGenerateKeys();
+		pSystem.paillierHomomorphicAddition(msgArray);
+    }
+    
     public void populateCandidateString() {
     	StringBuilder sb = new StringBuilder(Candidates.getCArray().length);
     	// adds 9 character string at beginning
@@ -76,6 +93,25 @@ public class VotingController {
     	}
     	System.out.println("'" + s + "' to binary: " + binary);    
     }
+    
+    public IAppState getAppState() {
+    	return appState;
+    }
+    
+    // state change
+    public void setAppState(IAppState appState) {
+    	this.appState = appState;
+    }
+
+	public void startAction(SystemController s)
+	{
+		appState.startAction(this);
+	}
+
+	public void endAction(SystemController s)
+	{
+		appState.endAction(this);
+	}	
     
 
     public ArrayList<ElGamal> getElGamal() {

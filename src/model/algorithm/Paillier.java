@@ -17,6 +17,9 @@ package model.algorithm;
 import java.math.*;
 import java.util.*;
 
+import controller.UIController;
+import utils.Config;
+
 /**
  * Paillier Cryptosystem <br><br>
  * References: <br>
@@ -42,7 +45,7 @@ public class Paillier {
     /**
      * nsquare = n*n
      */
-    public BigInteger nsquare;
+    public BigInteger nsqr;
     /**
      * a random integer in Z*_{n^2} where gcd (L(g^lambda mod n^2), n) = 1.
      */
@@ -55,11 +58,76 @@ public class Paillier {
     public Paillier() {
     	
     }
-    
-    public void generateKeys() {
-        KeyGeneration(512, 64);
-    }
 
+    /**
+     * main function
+     * @param str string Array of votes
+     */
+    public void paillierGenerateKeys() {
+    	
+
+    	//Get all keys based on bit length and prime certainty:
+    	KeyGeneration(Config.getBitSize(), Config.getPrimeCertainty());
+    	
+    	/*
+    	* Test MULTIPLICATIVE homomorphic properties -> D(E(m1)^m2 mod n^2) = (m1*m2) mod n
+    	* Get unencrypted sum AND encrypted product of all messages
+    	* Return decrypted encrypted product (using log) to set up proof of polymorphism
+    	*/
+    	/*BigInteger prod = new BigInteger(mA[0].toString());    	
+    	BigInteger eprod = new BigInteger(emA[0].toString());
+    	
+    	for (int i = 1; i < 2; i++) {
+    		prod = prod.multiply(mA[i]);
+    		eprod = eprod.modPow(mA[i], nsqr);	
+    	}
+    	
+    	UIController.getInstance().out("original prod: " + prod.toString());
+    	UIController.getInstance().out("decrypted prod: " + Decryption(eprod).toString());*/
+    	
+    }
+    
+    public void paillierHomomorphicAddition(String[] str) {
+    	
+    	//Don't continue if empty.
+    	if (str.length == 0) return;
+    	
+    	//Do encryption:
+    	UIController.getInstance().out("Votes cast: " + str.length, 1);
+    	BigInteger[] mA = new BigInteger[str.length]; 
+    	BigInteger[] emA = new BigInteger[str.length];    	
+    	
+    	for (int i = 0; i < str.length; i++) {
+    		mA[i] = new BigInteger(str[i]);
+    		UIController.getInstance().out("Vote " + (i+1) + " : " + str[i].toString(), 1);    		
+    		emA[i] = Encryption(mA[i]);
+    		UIController.getInstance().out("Encrypted Vote " + (i+1) + " : " + emA[i].toString(), 1);    		
+    	}
+    	
+    	/*
+    	* Test ADDITIVE homomorphic properties -> D( E(m1)*E(m2) mod n^2) = (m1 + m2) mod n
+    	* Get unencrypted sum AND encrypted product of all messages
+    	* Return decrypted encrypted product (using log) to set up proof of polymorphism
+    	*/
+    	BigInteger sum = new BigInteger(mA[0].toString());    	
+    	BigInteger esum = new BigInteger(emA[0].toString());
+    	for (int i = 1; i < str.length; i++) {
+    		sum = sum.add(mA[i]).mod(n);
+    		esum = esum.multiply(emA[i]).mod(nsqr);
+    	}
+    	UIController.getInstance().out("", 0);
+    	UIController.getInstance().out("original sum: " + sum.toString(), 0);
+    	UIController.getInstance().out("decrypted sum: " + Decryption(esum).toString(), 0);  	
+    	
+    }
+    
+    /**
+     * Gets the ball rolling.
+     */
+    public void generateKeys(int bits, int cert) {
+        KeyGeneration(bits, cert);
+    }
+    
     /**
      * Sets up the public key and private key.
      * @param bitLengthVal number of bits of modulus.
@@ -73,16 +141,31 @@ public class Paillier {
         q = new BigInteger(bitLength / 2, certainty, new Random());
 
         n = p.multiply(q);
-        nsquare = n.multiply(n);
+        nsqr = n.multiply(n);
 
         g = new BigInteger("2");
+        
+        //Carmichael's function:
         lambda = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE)).divide(
                 p.subtract(BigInteger.ONE).gcd(q.subtract(BigInteger.ONE)));
+        
         /* check whether g is good.*/
-        if (g.modPow(lambda, nsquare).subtract(BigInteger.ONE).divide(n).gcd(n).intValue() != 1) {
-            System.out.println("g is not good. Choose g again.");
-            System.exit(1);
-        }
+        if (g.modPow(lambda, nsqr).subtract(BigInteger.ONE).divide(n).gcd(n).intValue() != 1) {
+        	UIController.getInstance().out("g generator failed (!= 1). Regenerating...", 0);
+        	UIController.getInstance().out("", 0);
+            //System.exit(1);//failed
+            KeyGeneration(bitLength, certainty);
+        }        
+        
+        /*
+         * Output all generated keys to the output panel before encryption 
+         */
+        UIController.getInstance().out("Pallier Key generation @ " + ((Integer) bitLength).toString() + "-bits", 0);
+        UIController.getInstance().out("  p      : " + p.toString(), 0);
+        UIController.getInstance().out("  q      : " + q.toString(), 0);
+        UIController.getInstance().out("  n      : " + n.toString(), 0);
+        UIController.getInstance().out("  n^2    : " + nsqr.toString(), 0);
+        UIController.getInstance().out("  lambda : " + lambda.toString(), 0);
     }
 
     /**
@@ -91,9 +174,9 @@ public class Paillier {
      * @param r random plaintext to help with encryption
      * @return ciphertext as a BigInteger
      */
-    public BigInteger Encryption(BigInteger m, BigInteger r) {
-        return g.modPow(m, nsquare).multiply(r.modPow(n, nsquare)).mod(nsquare);
-    }
+    /*public BigInteger Encryption(BigInteger m, BigInteger r) {
+        return g.modPow(m, nsqr).multiply(r.modPow(n, nsqr)).mod(nsqr);
+    }*/
 
     /**
      * Encrypts plaintext m. ciphertext c = g^m * r^n mod n^2. This function automatically generates random input r (to help with encryption).
@@ -102,8 +185,7 @@ public class Paillier {
      */
     public BigInteger Encryption(BigInteger m) {
         BigInteger r = new BigInteger(bitLength, new Random());
-        return g.modPow(m, nsquare).multiply(r.modPow(n, nsquare)).mod(nsquare);
-
+        return g.modPow(m, nsqr).multiply(r.modPow(n, nsqr)).mod(nsqr);
     }
 
     /**
@@ -112,50 +194,8 @@ public class Paillier {
      * @return plaintext as a BigInteger
      */
     public BigInteger Decryption(BigInteger c) {
-        BigInteger u = g.modPow(lambda, nsquare).subtract(BigInteger.ONE).divide(n).modInverse(n);
-        return c.modPow(lambda, nsquare).subtract(BigInteger.ONE).divide(n).multiply(u).mod(n);
+        BigInteger u = g.modPow(lambda, nsqr).subtract(BigInteger.ONE).divide(n).modInverse(n);
+        return c.modPow(lambda, nsqr).subtract(BigInteger.ONE).divide(n).multiply(u).mod(n);
     }
 
-    /**
-     * main function
-     * @param str intput string
-     */
-    public void pallierReceive(String[] str) {
-        /* instantiating an object of Paillier cryptosystem*/
-        //Paillier paillier = new Paillier();
-        /* instantiating two plaintext msgs*/
-    	
-    	generateKeys();
-        
-        BigInteger m1 = new BigInteger("20");
-        BigInteger m2 = new BigInteger("60");
-        
-        /* encryption*/
-        BigInteger em1 = Encryption(m1);
-        BigInteger em2 = Encryption(m2);
-        
-        /* printout encrypted text*/
-        System.out.println(em1);
-        System.out.println(em2);
-        
-        /* printout decrypted text */
-        System.out.println(Decryption(em1).toString());
-        System.out.println(Decryption(em2).toString());
-
-        /* test homomorphic properties -> D(E(m1)*E(m2) mod n^2) = (m1 + m2) mod n */
-        BigInteger product_em1em2 = em1.multiply(em2).mod(nsquare);
-        BigInteger sum_m1m2 = m1.add(m2).mod(n);
-        
-        System.out.println("original sum: " + sum_m1m2.toString());
-        System.out.println("decrypted sum: " + Decryption(product_em1em2).toString());
-
-        /* test homomorphic properties -> D(E(m1)^m2 mod n^2) = (m1*m2) mod n */
-        BigInteger expo_em1m2 = em1.modPow(m2, nsquare);
-        BigInteger prod_m1m2 = m1.multiply(m2).mod(n);
-        
-        System.out.println("original product: " + prod_m1m2.toString());
-        System.out.println("decrypted product: " + Decryption(expo_em1m2).toString());
-        
-
-    }
 }

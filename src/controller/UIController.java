@@ -8,10 +8,12 @@ import java.awt.Insets;
 import java.awt.Toolkit;
 import javax.swing.*;
 
-import view.ColorPanel;
-import view.KeysPanel;
+import view.OutputPanel;
+import view.InstructionPanel;
+import view.MainPanel;
 import view.MenuBarUI;
 import view.TallyPanel;
+import view.VotingFrame;
 import view.ServerPanel;
 import view.VotingPanel;
 
@@ -37,38 +39,16 @@ import view.VotingPanel;
  * F: 05    L: 11    R: 17    X: 23
  * 
  */
-public class UIController extends JFrame {
 
-	private MenuBarUI menuBar;
-	private KeysPanel keysPanel;
-	private VotingPanel votingPanel;
-	private ServerPanel serverPanel;
-	private TallyPanel tallyPanel;
-	private ColorPanel colorPanel;
-	
-	
-    /*private JMenuBar menuBar;
-    private JPanel leftPanel, centerPanel, rightPanel, egPanel;
-    private JRadioButton encryptRadioButton, decryptRadioButton;
-    private JTextArea inputTextArea, resultTextArea;
-    private JButton newKeyButton, submitButton;
-    private JLabel headerLabel;
-    private JTextField textField1, textField2, textField3, textField4, textField5;
-    private JComboBox<String> algorithmSelectionList;*/
-	
 
-	private int prefCount = 0; 
+public class UIController {
 
-	private String message, egCipherText, nonEGCipherText;
-    
-    private GridBagConstraints c = new GridBagConstraints();
-    
 	private static UIController instance;
 
-	private UIController(){			
-		Container c = this.getContentPane();
-		c.setPreferredSize(new Dimension(800, 400));        
-	}
+	private VotingFrame votingFrame;
+	private JTextArea[] outputs = new JTextArea[2];
+
+	private UIController(){ }
 	
 	public static synchronized UIController getInstance() {
 		if (instance == null) {
@@ -77,36 +57,15 @@ public class UIController extends JFrame {
 		return instance;
 	}
     
-    /**
-     * Default constructor. Initiate ElGamal, RSA, and Knapsack objects, and
-     * also setup all other components to the frame.
-     */
-    public void setupUI() {
-        
-    	this.setLayout(new BorderLayout());
-
-    	menuBar = new MenuBarUI();
-    	votingPanel = new VotingPanel();
-    	colorPanel = new ColorPanel();
-    	keysPanel = new KeysPanel();
-    	
-    	//tallyPanel = new TallyPanel();
-    	
-    	//NEED a survey panel to 
-        
-        add(votingPanel, BorderLayout.NORTH);
-        add(keysPanel, BorderLayout.WEST);
-        //add(tallyPanel, BorderLayout.SOUTH);
-    	
-		this.setTitle("Voting System");
-		this.setJMenuBar(menuBar);
-        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        this.setSize(400,800);
-        this.setResizable(false);
-        this.pack();
-        this.setVisible(true);
-    	
+    public void setupUI() {    	
+    	votingFrame = new VotingFrame();
+    	outputs = votingFrame.getVotingPanel().getOutputPanel().getOutputs();
     }
+    
+    public void out(String msg, int i) {
+    	outputs[i].append(msg + "\n");
+    }
+    
     
     /**
      * Display window for user to set the maximum value for all the algorithms.
@@ -665,7 +624,7 @@ public class UIController extends JFrame {
      * @param insets this field specifies the external padding of the component, 
      *        the minimum amount of space between the component and the edges of its display area
      */
-    public void setComponent(JComponent parent, JComponent child,
+    /*public void setComponent(JComponent parent, JComponent child,
             int gridx, int gridy, int gridwidth, int gridheight, 
             int weightx, int weighty, int fill, Insets insets) {        
         c.gridx = gridx;
@@ -679,7 +638,7 @@ public class UIController extends JFrame {
         parent.add(child, c);  
     }
 
-    private static final int MASK = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();
+    private static final int MASK = Toolkit.getDefaultToolkit().getMenuShortcutKeyMask();*/
 
 
 }

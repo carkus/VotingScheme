@@ -4,6 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
+import java.awt.FlowLayout;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.GridBagLayout;
@@ -15,58 +16,39 @@ import javax.swing.Icon;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.plaf.metal.MetalCheckBoxIcon;
 
-import controller.VotingController;
+import controller.SystemController;
 import controller.UIController;
 import model.Candidates;
+import utils.Config;
 
 public class VotingPanel extends JPanel {
 	
-	private final int WIDTH = 350, HEIGHT = 90, FONT_SIZE = 20;
-	private final int NUM_COLORS = 5;
-	private Color [] color = new Color[NUM_COLORS];
-	private JLabel heading;
-	private JCheckBox [] votingButton;
-	
-	private VotingController systemController;
-	
-	public VotingPanel () {
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		systemController = VotingController.getInstance();
-		buildPanel();
-	}
+	OutputPanel outputPanel = new OutputPanel();
+	InstructionPanel instructionPanel = new InstructionPanel();
+	MainPanel mainPanel = new MainPanel();
 
-	private void buildPanel() {
+	public VotingPanel() {
 		
-		System.out.println("VotingPanel");
+		super();
 		
-		// Set up heading and colors
-		JPanel headingHolder = new JPanel(new GridBagLayout());
-		heading = new JLabel ("Select 3 candidates");
-		heading.setSize(new Dimension(800, 40));
-		heading.setFont (new Font ("Courier", Font.BOLD, FONT_SIZE));
-		headingHolder.add (heading);
-		add(headingHolder);
+		this.setLayout(new FlowLayout(FlowLayout.LEFT));
+		this.setLayout(new BorderLayout());
+		this.setPreferredSize(new Dimension(Config.getWidth(), 600));
 
-		JPanel buttonPanel = new JPanel();
+		JPanel contentPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		
-		String[] n = Candidates.getCArray();
-		votingButton = new JCheckBox[n.length];
-		for(int i = 0; i <n.length; i++) {
-			votingButton[i] = new JCheckBox(n[i]);
-			HighlightOnSelectIcon icon = new HighlightOnSelectIcon();
-			votingButton[i].setIcon(icon);
-			votingButton[i].addActionListener(new VotingListener(i));
-			buttonPanel.add(votingButton[i]);
-		}
+		contentPanel.add(instructionPanel);
+		contentPanel.add(mainPanel);
 		
-		setBackground (Color.white);
-		setPreferredSize (new Dimension (WIDTH, HEIGHT));		
-		
-		add(buttonPanel, BorderLayout.SOUTH);
+		this.add(contentPanel, BorderLayout.CENTER);
+		this.add(outputPanel, BorderLayout.SOUTH);
+	    
 	}
+	
 	
 	// ***************************************************************
 	// The listener for the CheckBoxes
@@ -80,7 +62,7 @@ public class VotingPanel extends JPanel {
 		public void actionPerformed (ActionEvent e) {
 			JCheckBox button = (JCheckBox) e.getSource();
 			System.out.println("click: " + this.index);
-			systemController.updateCandidateString(this.index);
+			//systemController.updateCandidateString(this.index);
 		}
 	}
 	
@@ -112,5 +94,12 @@ public class VotingPanel extends JPanel {
 	    }
 	}
 
+	public OutputPanel getOutputPanel() {
+		return outputPanel;
+	}
+	
+	public void setOutputPanel(OutputPanel outputPanel) {
+		this.outputPanel = outputPanel;
+	}
 }
 

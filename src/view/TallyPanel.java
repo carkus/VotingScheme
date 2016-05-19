@@ -12,18 +12,18 @@ import javax.swing.JPanel;
 import javax.swing.JSeparator;
 import javax.swing.JTextField;
 
-import controller.VotingController;
+import controller.SystemController;
 import model.algorithm.ElGamal;
 import controller.UIController;
 
 public class TallyPanel extends JPanel {
 
-	private VotingController systemController;
+	private SystemController systemController;
 	private UIController uiController;
 	
 	public TallyPanel () {
 		this.setLayout(new GridBagLayout());
-		systemController = VotingController.getInstance();
+		systemController = SystemController.getInstance();
 		uiController = UIController.getInstance();
 		buildPanel();
 	}
@@ -52,8 +52,8 @@ public class TallyPanel extends JPanel {
 		    System.out.println("TALLY PUBLIC: " + i + " : " + eG.get(i).getBobPublicKey());
 		}	    
 
-	    uiController.setComponent(this, lastVoteLabel, 0, 0, 13, 1, 1, 2, 2, new Insets(5,15,5,15));
-	    uiController.setComponent(this, tallyLabel, 0, 10, 13, 1, 1, 2, 2, new Insets(5,15,5,15));
+	    /*uiController.setComponent(this, lastVoteLabel, 0, 0, 13, 1, 1, 2, 2, new Insets(5,15,5,15));
+	    uiController.setComponent(this, tallyLabel, 0, 10, 13, 1, 1, 2, 2, new Insets(5,15,5,15));*/
 
 	}	
 
