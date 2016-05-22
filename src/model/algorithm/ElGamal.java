@@ -3,6 +3,7 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Random;
 
+import controller.UIController;
 import model.Alice;
 import model.Bob;
 import model.Convert;
@@ -14,7 +15,8 @@ public class ElGamal {
     private String message;	// the message
 
 	private BigInteger maxValue;	// max value of certain keys
-    
+	private BigInteger[] egEncryption;
+	
     private Bob bob;
     private Alice alice;
             
@@ -22,26 +24,42 @@ public class ElGamal {
      * Default constructor. 
      * @param String message to encrypt
      */
-    public ElGamal(String M) {
-    	setMessage(M);
-    	bob = buildBob();
-    	System.out.println("ENCODING VOTE: " + M);
-    	System.out.println("PUBLIC KEY: " + bob.getPublicKey() + " : PRIVATE : " + bob.getPrivateKey() );
-        alice = buildAlice();
-        BigInteger[] egEncryption = alice.doEncryption(getMessage());
-        
-        System.out.println("ENCRYPTED TO BOB: " + egEncryption[0] + " : " + egEncryption[1] );
-        
-        //bob.egDecrypt(egEncryption);
-        
+    public ElGamal() {
+        super();
     }
     
+    public BigInteger[] setElGamal(String M) {
+    	System.out.println("Message: " + M);        
+    	setMessage(M);
+    	bob = buildBob();
+        alice = buildAlice();
+        egEncryption = alice.doEncryption(getMessage());
+        
+        UIController.getInstance().out("C1: " + egEncryption[0], 0);
+        UIController.getInstance().out("C2: " + egEncryption[1], 0);
+        return egEncryption;
+    }
+    
+    public String doElGamal() {    	
+    	BigInteger decryption = bob.egDecrypt(egEncryption);  
+    	UIController.getInstance().out("", 0);  
+    	String s = decryption.toString();
+    	return s;
+    }
+
     private Bob buildBob() {
         bob = new Bob();        
         bob.setPrime(getRandomPrime());
         bob.setBase(generateRandom(bob.getPrime()));
         bob.setPrivateKey(getSecretKey());  
         bob.setPublicKey();
+        
+    	UIController.getInstance().out("ELGAMAL Encrypt: " + getMessage(), 0);
+    	UIController.getInstance().out("Public Key: " + bob.getPublicKey(), 1);
+    	UIController.getInstance().out("Private Key: " + bob.getPrivateKey() , 1);
+    	UIController.getInstance().out("Generator: " + bob.getBase() , 1); 
+    	UIController.getInstance().out("", 1); 
+    	
         return bob;
     }
     

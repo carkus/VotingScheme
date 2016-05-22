@@ -37,9 +37,9 @@ public class MainPanel extends JPanel {
 		JPanel pnContainer = new JPanel(new GridLayout(4, 1));
 		pnContainer.setPreferredSize(new Dimension(Config.getWidth()-30, Config.getHeight()-410));
 		pnContainer.setBorder(BorderFactory.createEmptyBorder(0, 0, 0, 0));
-
-		this.add(pnContainer);
 		
+		buildSubPanels();
+
 	}
 	
 	private void makeGUI() {
@@ -52,6 +52,18 @@ public class MainPanel extends JPanel {
 	
 	public String getStateTitle() {		
 		return systemController.getAppState().getTitle().toString();
+	}
+	
+	public void buildSubPanels() {
+		RegistrationPanel regPanel = new RegistrationPanel();
+		regPanel.setVisible(false);
+		uiController.setRegistrationPanel(regPanel);
+		this.add(regPanel);		
+
+		BallotPanel ballotPanel = new BallotPanel();
+		ballotPanel.setVisible(false);
+		uiController.setBallotPanel(ballotPanel);
+		this.add(ballotPanel);		
 	}
 
 	

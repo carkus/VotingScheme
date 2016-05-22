@@ -11,7 +11,7 @@ public class Config {
 		return PRIME_CERTAINTY;
 	}
 	
-	private static final int BIT_SIZE = 64;
+	private static final int BIT_SIZE = 128;
 	public static int getBitSize() {
 		return BIT_SIZE;
 	}

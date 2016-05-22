@@ -18,16 +18,12 @@ public class StateRegistration implements IAppState {
 
 	@Override
 	public void startAction(SystemController s) {
-		// TODO Auto-generated method stub
-		
-		//UIController.getInstance().out("Start Reg...");
-		
+		UIController.getInstance().getRegistrationPanel().setVisible(true);		
 	}
 
 	@Override
 	public void endAction(SystemController s) {
-		// TODO Auto-generated method stub
-		
+		UIController.getInstance().getRegistrationPanel().setVisible(false);
 	}
 
 	@Override
@@ -38,7 +34,6 @@ public class StateRegistration implements IAppState {
 
 	@Override
 	public String getTitle() {
-		// TODO Auto-generated method stub
 		return "Registration";
 	}	
 

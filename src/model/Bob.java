@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.security.SecureRandom;
 import java.util.Random;
 
+import controller.UIController;
 import utils.Config;
 
 public class Bob {
@@ -24,16 +25,20 @@ public class Bob {
 	
 	public Bob () { }
 	
-	public void egDecrypt(BigInteger[] egEncrypt) {
+	public BigInteger egDecrypt(BigInteger[] egEncrypt) {
 		
 		BigInteger C1 = egEncrypt[0];
 		BigInteger C2 = egEncrypt[1];
+		
+        UIController.getInstance().out("C1: " + C1, 1);
+        UIController.getInstance().out("C2: " + C2, 1);
+		
         // Decryption
         BigInteger K = C1.modPow(getPrivateKey(), getPrime());        
         BigInteger KInverse = K.modInverse(getPrime());        
         BigInteger sol = C2.multiply(KInverse).mod(getPrime());
-        System.out.println("Bob decodes: " + sol);
-		
+        UIController.getInstance().out("Decrypted: " + sol, 1);
+		return sol;
 	}
 	
 	public void setPublicKey() {

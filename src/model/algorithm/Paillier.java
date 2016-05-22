@@ -101,7 +101,8 @@ public class Paillier {
     		mA[i] = new BigInteger(str[i]);
     		UIController.getInstance().out("Vote " + (i+1) + " : " + str[i].toString(), 1);    		
     		emA[i] = Encryption(mA[i]);
-    		UIController.getInstance().out("Encrypted Vote " + (i+1) + " : " + emA[i].toString(), 1);    		
+    		UIController.getInstance().out("Encrypted Vote " + (i+1) + " : " + emA[i].toString(), 1);
+    		UIController.getInstance().out("", 1);    		
     	}
     	
     	/*

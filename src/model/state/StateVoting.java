@@ -1,6 +1,7 @@
 package model.state;
 
 import controller.SystemController;
+import controller.UIController;
 
 public class StateVoting implements IAppState {
 
@@ -17,14 +18,12 @@ public class StateVoting implements IAppState {
 
 	@Override
 	public void startAction(SystemController s) {
-		// TODO Auto-generated method stub
-		
+		UIController.getInstance().getBallotPanel().setVisible(true);	
 	}
 
 	@Override
 	public void endAction(SystemController s) {
-		// TODO Auto-generated method stub
-		
+		UIController.getInstance().getBallotPanel().setVisible(false);	
 	}
 
 	@Override
