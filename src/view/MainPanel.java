@@ -41,15 +41,7 @@ public class MainPanel extends JPanel {
 		buildSubPanels();
 
 	}
-	
-	private void makeGUI() {
-		JTabbedPane jtp = new JTabbedPane();
-		/*jtp.addTab("Cities", new CitiesPanel());
-		jtp.addTab("Colors", new ColorsPanel());
-		jtp.addTab("Flavors", new FlavorsPanel());*/
-		add(jtp);
-	}
-	
+
 	public String getStateTitle() {		
 		return systemController.getAppState().getTitle().toString();
 	}
@@ -63,7 +55,12 @@ public class MainPanel extends JPanel {
 		BallotPanel ballotPanel = new BallotPanel();
 		ballotPanel.setVisible(false);
 		uiController.setBallotPanel(ballotPanel);
-		this.add(ballotPanel);		
+		this.add(ballotPanel);	
+
+		TallyPanel tallyPanel = new TallyPanel();
+		tallyPanel.setVisible(false);
+		uiController.setTallyPanel(tallyPanel);
+		this.add(tallyPanel);			
 	}
 
 	

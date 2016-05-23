@@ -12,6 +12,8 @@ public class SystemController {
 	
 	private ArrayList<Voter> voterList = new ArrayList<Voter>();
 	
+	private String[] tallyArray;
+			
 	private IAppState appState;
 	
 	public static synchronized SystemController getInstance() {
@@ -37,9 +39,9 @@ public class SystemController {
 			voterList.add(voter);			
 		}
 	}
-	
+
 	public void setupVoter() {
-		startAction();		
+		startAction();
 	}	
     
     private void convertStringToBinary(String msg) {    	
@@ -61,6 +63,12 @@ public class SystemController {
     
     public IAppState getAppState() {
     	return appState;
+    }
+    
+    public void changeState(IAppState appState) {		
+		SystemController.getInstance().endAction();
+		SystemController.getInstance().setAppState(appState);
+		SystemController.getInstance().startAction();
     }
     
     // state change
@@ -88,6 +96,14 @@ public class SystemController {
 
 	public void setVoterList(ArrayList<Voter> voterList) {
 		this.voterList = voterList;
+	}
+
+	public String[] getTallyArray() {
+		return tallyArray;
+	}
+
+	public void setTallyArray(String[] tallyArray) {
+		this.tallyArray = tallyArray;
 	}
 	
 }

@@ -1,6 +1,8 @@
 package model.state;
 
 import controller.SystemController;
+import controller.TallyController;
+import controller.UIController;
 
 public class StateTally implements IAppState {
 	
@@ -17,14 +19,13 @@ public class StateTally implements IAppState {
 
 	@Override
 	public void startAction(SystemController s) {
-		// TODO Auto-generated method stub
-		
+		UIController.getInstance().getTallyPanel().setVisible(true);
+		TallyController.getInstance().setTallyValues();
 	}
 
 	@Override
 	public void endAction(SystemController s) {
-		// TODO Auto-generated method stub
-		
+		UIController.getInstance().getTallyPanel().setVisible(false);		
 	}
 
 	@Override

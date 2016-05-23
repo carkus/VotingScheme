@@ -6,6 +6,8 @@ import java.util.Random;
 import model.Candidates;
 import model.algorithm.ElGamal;
 import model.algorithm.Paillier;
+import model.state.StateTally;
+import model.state.StateVoting;
 
 public class BallotController {
 	
@@ -13,7 +15,7 @@ public class BallotController {
 	
 	private ArrayList <ElGamal> elGamalVotes;
 	
-	private int voteCount = 5;
+	private int voteCount = 100;
 	private String[] resultArray;
 	private Paillier pSystem;		
 
@@ -70,9 +72,8 @@ public class BallotController {
     }    	
 	
 	public void tallyVotes(String[] s) {
-		for (int a=0; a<s.length; a++) {
-			System.out.println(a + " : " + s[a]);
-		}
+		SystemController.getInstance().setTallyArray(s);
+		SystemController.getInstance().changeState(StateTally.getInstance());
 	}
 	
 	public String generateDummyVote(int a) {

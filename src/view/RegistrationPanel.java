@@ -34,6 +34,14 @@ public class RegistrationPanel extends JPanel{
 	private JButton btnContinue = new JButton();
 	private JTextField regOutput = new JTextField();
 	
+	public JTextField getRegOutput() {
+		return regOutput;
+	}
+
+	public void setRegOutput(JTextField regOutput) {
+		this.regOutput = regOutput;
+	}
+
 	public RegistrationPanel() {
 		super();
 		
@@ -81,7 +89,7 @@ public class RegistrationPanel extends JPanel{
 		btnContinue.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				checkRegistrationServer(regValues);
+				RegistrationController.getInstance().checkRegistrationServer(regValues);
 			}
 		});
 		
@@ -99,27 +107,5 @@ public class RegistrationPanel extends JPanel{
 		add(regOutput);
 		
 	}
-	
-	private void checkRegistrationServer(String[] s) {
-		//send to ElGamal for confirmation
-		regOutput.setText("");
-		if(!RegistrationController.getInstance().verifyVoterWithElGamal(s)){
-			regOutput.setText("Registration Unsuccessful.  (incorrect voter details)");
-			return;
-		} else if (!RegistrationController.getInstance().verifyVoterUniqueness(s)){
-			regOutput.setText("Voter has already voted");
-			return;
-		}
-		
-		UIController.getInstance().out("\nVoter found.", 0);
-		
-		SystemController.getInstance().endAction();
-		SystemController.getInstance().setAppState(StateVoting.getInstance());
-		SystemController.getInstance().startAction();
-		
-	}
-	
-	
-
 	
 }

@@ -53,6 +53,7 @@ public class UIController {
 	private InstructionPanel instructionPanel;
 	private RegistrationPanel registrationPanel;
 	private BallotPanel ballotPanel;
+	private TallyPanel tallyPanel;
 
 	private UIController(){ }
 	
@@ -94,6 +95,14 @@ public class UIController {
 
 	public void setInstructionPanel(InstructionPanel instructionPanel) {
 		this.instructionPanel = instructionPanel;
+	}
+
+	public TallyPanel getTallyPanel() {
+		return tallyPanel;
+	}
+
+	public void setTallyPanel(TallyPanel tallyPanel) {
+		this.tallyPanel = tallyPanel;
 	}
 
 

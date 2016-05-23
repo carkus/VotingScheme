@@ -4,7 +4,9 @@ import java.util.ArrayList;
 
 import model.Voter;
 import model.algorithm.ElGamal;
+import model.state.StateVoting;
 import utils.Helpers;
+import view.RegistrationPanel;
 
 public class RegistrationController {
 	
@@ -57,5 +59,22 @@ public class RegistrationController {
 		}
 		return true;		
 	}	
+	
+	public void checkRegistrationServer(String[] s) {
+		//send to ElGamal for confirmation
+		UIController.getInstance().getRegistrationPanel().getRegOutput().setText("");
+		if(!RegistrationController.getInstance().verifyVoterWithElGamal(s)){
+			String msg = "Registration Unsuccessful.  (incorrect voter details)";
+			UIController.getInstance().getRegistrationPanel().getRegOutput().setText(msg);
+			return;
+		} else if (!RegistrationController.getInstance().verifyVoterUniqueness(s)){
+			String msg = "Voter has already voted";
+			UIController.getInstance().getRegistrationPanel().getRegOutput().setText(msg);
+			return;
+		}		
+		SystemController.getInstance().changeState(StateVoting.getInstance());
+		UIController.getInstance().out("\nVoter found.", 0);
+		
+	}
 	
 }
