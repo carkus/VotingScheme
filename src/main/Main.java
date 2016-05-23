@@ -22,7 +22,7 @@ public class Main {
 		
 		systemController.setupVoter();
 		//systemController.populateCandidateString();
-		systemController.doVoting();
+		//systemController.doVoting();
 		
 				
 		System.out.println("All Controllers constructed");

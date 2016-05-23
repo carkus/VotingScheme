@@ -50,6 +50,7 @@ public class UIController {
 	private VotingFrame votingFrame;
 	private JTextArea[] outputs = new JTextArea[2];
 	
+	private InstructionPanel instructionPanel;
 	private RegistrationPanel registrationPanel;
 	private BallotPanel ballotPanel;
 
@@ -85,6 +86,14 @@ public class UIController {
 
 	public void setBallotPanel(BallotPanel ballotPanel) {
 		this.ballotPanel = ballotPanel;
+	}
+
+	public InstructionPanel getInstructionPanel() {
+		return instructionPanel;
+	}
+
+	public void setInstructionPanel(InstructionPanel instructionPanel) {
+		this.instructionPanel = instructionPanel;
 	}
 
 

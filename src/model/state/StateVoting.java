@@ -36,6 +36,17 @@ public class StateVoting implements IAppState {
 	public String getTitle() {
 		// TODO Auto-generated method stub
 		return "Voting";
+	}
+
+	@Override
+	public String getInstructions() {
+		// TODO Auto-generated method stub
+		StringBuilder str = new StringBuilder();
+		str.append("Registration successful. You can now place your vote.\n");
+		str.append("Select 3 candidates you wish to vote for.\n");
+		str.append("Incomplete votes will NOT be counted. But WILL be allowed, in an attempt to minimise coersion.\n");
+		str.append("After validation, the votes will be encrypted and tallied using (additive homomorphic) Paillier.");
+		return str.toString();
 	}	
 
 }

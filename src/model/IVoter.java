@@ -17,5 +17,6 @@ public interface IVoter {
 	public void setHasVoted(Boolean b);
 	
 	public Boolean getHasVoted();
+	
 
 }

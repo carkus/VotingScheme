@@ -37,6 +37,12 @@ public class StateTally implements IAppState {
 	public String getTitle() {
 		// TODO Auto-generated method stub
 		return "Tally of votes";
+	}
+
+	@Override
+	public String getInstructions() {
+		// TODO Auto-generated method stub
+		return null;
 	}	
 	
 

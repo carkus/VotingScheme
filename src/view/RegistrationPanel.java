@@ -15,7 +15,9 @@ import javax.swing.JComboBox;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+import controller.RegistrationController;
 import controller.SystemController;
+import controller.UIController;
 import model.Voter;
 import model.state.StateVoting;
 import utils.Config;
@@ -101,16 +103,19 @@ public class RegistrationPanel extends JPanel{
 	private void checkRegistrationServer(String[] s) {
 		//send to ElGamal for confirmation
 		regOutput.setText("");
-		if(!SystemController.getInstance().verifyVoterWithElGamal(s)){
-			regOutput.setText("Registration Unsuccesful");
+		if(!RegistrationController.getInstance().verifyVoterWithElGamal(s)){
+			regOutput.setText("Registration Unsuccessful.  (incorrect voter details)");
+			return;
+		} else if (!RegistrationController.getInstance().verifyVoterUniqueness(s)){
+			regOutput.setText("Voter has already voted");
 			return;
 		}
+		
+		UIController.getInstance().out("\nVoter found.", 0);
+		
 		SystemController.getInstance().endAction();
 		SystemController.getInstance().setAppState(StateVoting.getInstance());
 		SystemController.getInstance().startAction();
-		
-		
-		//System.out.println("Registration Successful: " + v);
 		
 	}
 	

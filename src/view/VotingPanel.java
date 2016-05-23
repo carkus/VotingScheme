@@ -41,7 +41,7 @@ public class VotingPanel extends JPanel {
 
 		JPanel contentPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		
-		contentPanel.add(instructionPanel);
+		contentPanel.add(instructionPanel);		
 		contentPanel.add(mainPanel);
 		
 		this.add(contentPanel, BorderLayout.CENTER);

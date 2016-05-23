@@ -17,12 +17,12 @@ public class Data {
 		dbDataArray = new String[votersRegistered][4];
 		dbArrayList.add(new String[]{"Frances", "Ormond", "Coen", "false"});
 		dbArrayList.add(new String[]{"Darryl", "Hall", "Oats", "false"});
-		dbArrayList.add(new String[]{"Michael", "Jackson", "Thriller", "false"});
+		dbArrayList.add(new String[]{"Michael", "Jackson", "Thriller", "true"});
 		dbArrayList.add(new String[]{"Freddy", "Mercury", "Queen", "false"});
 		dbArrayList.add(new String[]{"Elvis", "Presley", "Donut", "false"});
 		dbArrayList.add(new String[]{"Samuel", "Beckett", "Godot", "false"});
 		dbArrayList.add(new String[]{"Taylor", "Swift", "Talent", "false"});
-		dbArrayList.add(new String[]{"Al", "Pacino", "Scarface", "false"});
+		dbArrayList.add(new String[]{"Al", "Pacino", "Scarface", "true"});
 		dbArrayList.add(new String[]{"Robert", "Deniro", "Taxi Driver", "false"});
 	
 	}

@@ -35,8 +35,9 @@ public class ElGamal {
         alice = buildAlice();
         egEncryption = alice.doEncryption(getMessage());
         
-        UIController.getInstance().out("C1: " + egEncryption[0], 0);
-        UIController.getInstance().out("C2: " + egEncryption[1], 0);
+        UIController.getInstance().out("Send C1: " + egEncryption[0], 1);
+        UIController.getInstance().out("Send C2: " + egEncryption[1], 1);
+        UIController.getInstance().out("", 0);
         return egEncryption;
     }
     
@@ -54,9 +55,9 @@ public class ElGamal {
         bob.setPrivateKey(getSecretKey());  
         bob.setPublicKey();
         
-    	UIController.getInstance().out("ELGAMAL Encrypt: " + getMessage(), 0);
+        UIController.getInstance().out("ElGamal encrypt: " + getMessage(), 0);
     	UIController.getInstance().out("Public Key: " + bob.getPublicKey(), 1);
-    	UIController.getInstance().out("Private Key: " + bob.getPrivateKey() , 1);
+    	UIController.getInstance().out("__private__: " + bob.getPrivateKey() , 0);
     	UIController.getInstance().out("Generator: " + bob.getBase() , 1); 
     	UIController.getInstance().out("", 1); 
     	

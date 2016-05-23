@@ -30,14 +30,14 @@ public class Bob {
 		BigInteger C1 = egEncrypt[0];
 		BigInteger C2 = egEncrypt[1];
 		
-        UIController.getInstance().out("C1: " + C1, 1);
-        UIController.getInstance().out("C2: " + C2, 1);
-		
+        UIController.getInstance().out("Receive C1: " + C1, 0);
+        UIController.getInstance().out("Receive C2: " + C2, 0);
+        
         // Decryption
         BigInteger K = C1.modPow(getPrivateKey(), getPrime());        
         BigInteger KInverse = K.modInverse(getPrime());        
         BigInteger sol = C2.multiply(KInverse).mod(getPrime());
-        UIController.getInstance().out("Decrypted: " + sol, 1);
+        UIController.getInstance().out("Decrypted: " + sol, 0);
 		return sol;
 	}
 	

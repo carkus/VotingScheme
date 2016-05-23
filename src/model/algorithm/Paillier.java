@@ -87,10 +87,10 @@ public class Paillier {
     	
     }
     
-    public void paillierHomomorphicAddition(String[] str) {
+    public String paillierHomomorphicAddition(String[] str) {
     	
     	//Don't continue if empty.
-    	if (str.length == 0) return;
+    	if (str.length == 0) return null;
     	
     	//Do encryption:
     	UIController.getInstance().out("Votes cast: " + str.length, 1);
@@ -118,7 +118,9 @@ public class Paillier {
     	}
     	UIController.getInstance().out("", 0);
     	UIController.getInstance().out("original sum: " + sum.toString(), 0);
-    	UIController.getInstance().out("decrypted sum: " + Decryption(esum).toString(), 0);  	
+    	UIController.getInstance().out("decrypted sum: " + Decryption(esum).toString(), 0);  
+    	
+    	return Decryption(esum).toString();
     	
     }
     

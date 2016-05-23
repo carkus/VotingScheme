@@ -14,23 +14,16 @@ public class Helpers {
 		return instance;
 	} 
 	
-	private Helpers(){	}
-	
+	private Helpers(){	}	
 	
 	public int diffValues(String[] s){
-	    int numOfDifferentVals = 0;
 	    ArrayList<String> diffNum = new ArrayList<String>();
 	    for(int i=0; i<s.length; i++){	        
 	    	if(!diffNum.contains(s[i])){
 	            diffNum.add(s[i]);
 	        }	    	
 	    }
-	    if (diffNum.size()==1) {
-	    	numOfDifferentVals = 0;
-	    } else{
-	    	numOfDifferentVals = diffNum.size();
-	    }
-	    return numOfDifferentVals;
+	    return diffNum.size();
 	}
 	
 }

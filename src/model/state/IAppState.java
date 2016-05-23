@@ -12,5 +12,7 @@ public interface IAppState {
    
    public abstract String getTitle();
    
+   public abstract String getInstructions();
+   
 	
 }
