@@ -7,7 +7,6 @@ import model.Candidates;
 import model.algorithm.ElGamal;
 import model.algorithm.Paillier;
 import model.state.StateTally;
-import model.state.StateVoting;
 
 public class BallotController {
 	
@@ -15,7 +14,7 @@ public class BallotController {
 	
 	private ArrayList <ElGamal> elGamalVotes;
 	
-	private int voteCount = 100;
+	private int voteCount = 1000;
 	private String[] resultArray;
 	private Paillier pSystem;		
 

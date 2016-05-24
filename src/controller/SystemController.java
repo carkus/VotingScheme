@@ -24,7 +24,7 @@ public class SystemController {
 	} 
 	
 	private SystemController(){
-		setAppState(StateVoting.getInstance());
+		setAppState(StateRegistration.getInstance());
 		populateVoterList();
 	}
 	

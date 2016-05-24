@@ -64,6 +64,7 @@ public class TallyPanel extends JPanel {
 			
 			tallyTextLabel[i] = new JLabel(n[i]);			
 			tallyTextField[i] = new JTextField("");
+			tallyTextField[i].setPreferredSize(new Dimension(30, 20));
 			
 			//votingButton[i].addActionListener(new VotingListener(i));
 			ballotBoxPanel.add(tallyTextLabel[i]);
@@ -71,7 +72,6 @@ public class TallyPanel extends JPanel {
 		}
 		
 		btnContinue = new JButton("Restart");
-		btnContinue.setPreferredSize(new Dimension(140, 36));
 		btnContinue.setPreferredSize(new Dimension(140, 36));
 		
 		//btnContinue.setBorder(BorderFactory.createLineBorder(Color.BLACK, 20));
