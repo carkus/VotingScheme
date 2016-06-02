@@ -90,16 +90,16 @@ public class RegistrationController {
 		UIController.getInstance().clear(2);	
 		
 		UIController.getInstance().getRegistrationPanel().getRegOutput().setText("");
-		if (!RegistrationController.getInstance().verifyVoterUniqueness(s)){
-			String msg = "Voter has already voted";
-			UIController.getInstance().getRegistrationPanel().getRegOutput().setText(msg);
-			return;
-		}
 		if(!RegistrationController.getInstance().verifyVoterWithElGamal(s)){
 			String msg = "Registration Unsuccessful.  (incorrect voter details)";
 			UIController.getInstance().getRegistrationPanel().getRegOutput().setText(msg);
 			return;
 		} 
+		if (!RegistrationController.getInstance().verifyVoterUniqueness(s)){
+			String msg = "Voter has already voted";
+			UIController.getInstance().getRegistrationPanel().getRegOutput().setText(msg);
+			return;
+		}
 		SystemController.getInstance().setVoterList(closeVoterAccess(SystemController.getInstance().getVoterList(), Integer.parseInt(s[0])));
 		SystemController.getInstance().changeState(StateVoting.getInstance());
 		UIController.getInstance().out("\nVoter found.", 0);		
