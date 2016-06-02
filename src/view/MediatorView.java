@@ -5,48 +5,53 @@ import java.awt.Color;
 import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.FlowLayout;
-import java.awt.Font;
 import java.awt.Graphics;
-import java.awt.GridBagLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
-import javax.swing.BoxLayout;
 import javax.swing.Icon;
 import javax.swing.JCheckBox;
-import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.UIManager;
 import javax.swing.plaf.metal.MetalCheckBoxIcon;
 
 import controller.SystemController;
-import controller.UIController;
-import model.Candidates;
+import model.Voter;
+import model.state.IAppState;
 import utils.Config;
 
-public class VotingPanel extends JPanel {
+public class MediatorView extends JPanel {
 	
 	OutputPanel outputPanel = new OutputPanel();
 	InstructionPanel instructionPanel = new InstructionPanel();
 	MainPanel mainPanel = new MainPanel();
 
-	public VotingPanel() {
-		
+	private static MediatorView instance;
+	
+	public static synchronized MediatorView getInstance() {
+		if (instance == null) {
+			instance = new MediatorView();
+		}
+		return instance;
+	} 
+	
+	private MediatorView() {
 		super();
-		
+	}
+	
+	public void buildPanel() {
 		this.setLayout(new FlowLayout(FlowLayout.LEFT));
 		this.setLayout(new BorderLayout());
-		this.setPreferredSize(new Dimension(Config.getWidth(), 600));
+		this.setPreferredSize(new Dimension(Config.getWidth(), 700));
 
 		JPanel contentPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
 		
 		contentPanel.add(instructionPanel);		
 		contentPanel.add(mainPanel);
+		contentPanel.add(outputPanel, BorderLayout.SOUTH);
 		
 		this.add(contentPanel, BorderLayout.CENTER);
-		this.add(outputPanel, BorderLayout.SOUTH);
-	    
 	}
 	
 	

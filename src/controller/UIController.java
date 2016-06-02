@@ -1,23 +1,14 @@
 package controller;
 
-import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Dimension;
-import java.awt.GridBagConstraints;
-import java.awt.Insets;
-import java.awt.Toolkit;
 import javax.swing.*;
 
-import view.OutputPanel;
 import view.RegistrationPanel;
 import view.BallotPanel;
 import view.InstructionPanel;
-import view.MainPanel;
-import view.MenuBarUI;
+import view.OptionFrame;
 import view.TallyPanel;
 import view.VotingFrame;
-import view.ServerPanel;
-import view.VotingPanel;
+import view.BallotPanel.VotingListener;
 
 /**
  * A program that simulate some cryptography system and perform some algorithms
@@ -54,6 +45,7 @@ public class UIController {
 	private RegistrationPanel registrationPanel;
 	private BallotPanel ballotPanel;
 	private TallyPanel tallyPanel;
+	private OptionFrame optionFrame;
 
 	private UIController(){ }
 	
@@ -65,12 +57,25 @@ public class UIController {
 	}
     
     public void setupUI() {    	
+    	optionFrame = new OptionFrame();
+    	optionFrame.setVisible(false);
     	votingFrame = new VotingFrame();
     	outputs = votingFrame.getVotingPanel().getOutputPanel().getOutputs();
     }
     
+	public void disableVoting() {
+		for(int i = 0; i <ballotPanel.votingButton.length; i++) {
+			if (!ballotPanel.votingButton[i].isSelected()) {
+				ballotPanel.votingButton[i].setEnabled(false);
+			}
+		}
+	}
+    
     public void out(String msg, int i) {
     	outputs[i].append(msg + "\n");
+    }
+    public void clear(int i) {
+    	outputs[i].setText("");
     }
  
 	public RegistrationPanel getRegistrationPanel() {
@@ -105,6 +110,9 @@ public class UIController {
 		this.tallyPanel = tallyPanel;
 	}
 
+	public OptionFrame getOptionPanel() {
+		return optionFrame;
+	}
 
     /**
      * A helper method that help to layout the given child component on the

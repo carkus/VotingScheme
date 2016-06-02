@@ -9,6 +9,8 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.KeyStroke;
 
+import controller.UIController;
+
 public class MenuBarUI extends JMenuBar {
 	
 	public MenuBarUI () {
@@ -25,16 +27,17 @@ public class MenuBarUI extends JMenuBar {
         this.add(menu);
         
         // Allow user to reset the maximum value for all algorithms
-        /*JMenuItem maxValueMenuItem = new JMenuItem("Change Max Value");
+        JMenuItem maxValueMenuItem = new JMenuItem("Options");
         maxValueMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                //displayMaxValueDialog();
+                //MediatorUI.getInstance().showOptionsPane();
+            	UIController.getInstance().getOptionPanel().setVisible(true);
             }
         });
         menu.add(maxValueMenuItem);
         
         // Allow user to generate a random prime number within given range
-        JMenuItem primeMenuItem = new JMenuItem("Prime Generator");
+        /*JMenuItem primeMenuItem = new JMenuItem("Prime Generator");
         primeMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //displayPrimeDialog();
@@ -55,5 +58,6 @@ public class MenuBarUI extends JMenuBar {
         menu.add(exitMenuItem);
 
     }
+
 
 }

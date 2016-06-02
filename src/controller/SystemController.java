@@ -28,7 +28,10 @@ public class SystemController {
 		populateVoterList();
 	}
 	
-	public void populateVoterList() {		
+	public void populateVoterList() {
+		
+		System.out.println("Populating Voters...");
+		
 		ArrayList<String[]> vList = new ArrayList<String[]>(Data.getInstance().getDbArrayList());
 		for (int i=0; i<vList.size(); i++) {			
 			Voter voter = new Voter();

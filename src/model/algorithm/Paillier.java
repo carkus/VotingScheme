@@ -67,7 +67,7 @@ public class Paillier {
     	
 
     	//Get all keys based on bit length and prime certainty:
-    	KeyGeneration(Config.getBitSize(), Config.getPrimeCertainty());
+    	KeyGeneration(Config.getPaillierBitSize(), Config.getPrimeCertainty());
     	
     	/*
     	* Test MULTIPLICATIVE homomorphic properties -> D(E(m1)^m2 mod n^2) = (m1*m2) mod n

@@ -24,9 +24,6 @@ import utils.Config;
 
 public class InstructionPanel extends JPanel {
 	
-	private final int HEIGHT = 100;
-	private final int FONT_SIZE = 20;
-	
 	private UIController uiController;
 	private SystemController systemController;
 	
@@ -55,31 +52,12 @@ public class InstructionPanel extends JPanel {
 		iText.setWrapStyleWord(true);
 		iText.setMargin(new Insets(5,5,5,5));
 		iText.setBackground(new Color(239, 239, 239));
-		//iText.setBorder(javax.swing.BorderFactory.createEmptyBorder());
 		
 	    TitledBorder titled = new TitledBorder("Instructions");
+	    
 	    this.setBorder(titled);
-
 		this.add(iText);
-
-		/*JPanel buttonPanel = new JPanel();
-		
-		String[] n = Candidates.getCArray();
-		votingButton = new JCheckBox[n.length];
-		for(int i = 0; i <n.length; i++) {
-			votingButton[i] = new JCheckBox(n[i]);
-			HighlightOnSelectIcon icon = new HighlightOnSelectIcon();
-			votingButton[i].setIcon(icon);
-			votingButton[i].addActionListener(new VotingListener(i));
-			buttonPanel.add(votingButton[i]);
-		}*/
-		
-		/*wrapper.add (heading);
-		this.add(wrapper);
-		this.setBackground (Color.RED);*/
-		
-		
-		this.setPreferredSize (new Dimension(Config.getWidth()-10, HEIGHT));
+		this.setPreferredSize (new Dimension(Config.getWidth()-10, 140));
 		
 	}
 

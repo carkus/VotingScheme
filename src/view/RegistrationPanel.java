@@ -46,7 +46,7 @@ public class RegistrationPanel extends JPanel{
 		super();
 		
 		this.setLayout(new FlowLayout(FlowLayout.LEFT));
-		this.setPreferredSize(new Dimension(Config.getWidth()-30, 90));
+		this.setPreferredSize (new Dimension (Config.getWidth()-30, Config.getPanelHeight()));
 		//this.setBackground(Color.RED);
 				
 		dbList = SystemController.getInstance().getVoterList();
@@ -80,12 +80,12 @@ public class RegistrationPanel extends JPanel{
 		cbLastName.setSelectedIndex(new Random().nextInt(cbLastName.getItemCount()));
 		cbSecret.setSelectedIndex(new Random().nextInt(cbSecret.getItemCount()));
 		
-		cbFirstName.setPreferredSize(new Dimension(200, 30));
-		cbLastName.setPreferredSize(new Dimension(200, 30));
-		cbSecret.setPreferredSize(new Dimension(200, 30));
+		cbFirstName.setPreferredSize(new Dimension((Config.getWidth()/4), 30));
+		cbLastName.setPreferredSize(new Dimension((Config.getWidth()/4), 30));
+		cbSecret.setPreferredSize(new Dimension((Config.getWidth()/4), 30));
 		
 		btnContinue = new JButton("Register");
-		btnContinue.setPreferredSize(new Dimension(140, 36));
+		btnContinue.setPreferredSize(new Dimension((Config.getWidth()/4)-60, 36));
 		btnContinue.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {

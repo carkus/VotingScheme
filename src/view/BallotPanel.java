@@ -16,31 +16,33 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 
 import controller.BallotController;
+import controller.UIController;
 import model.Candidates;
+import utils.Config;
 
 public class BallotPanel extends JPanel {
 	
-	private final int WIDTH = 770, HEIGHT = 90, FONT_SIZE = 20;
-	
 	private JButton btnContinue;
 	private JLabel heading;
-	private JCheckBox [] votingButton;
+	
+	public JCheckBox [] votingButton;
 	
 	public BallotPanel () {
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		this.setPreferredSize (new Dimension (WIDTH, HEIGHT));
 		buildPanel();
 	}
 
 	private void buildPanel() {
 		
 		System.out.println("BallotPanel");
+
+		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		this.setPreferredSize (new Dimension (Config.getWidth()-30, Config.getPanelHeight()));
 		
 		// Set up heading and colors
 		JPanel headingHolder = new JPanel(new GridBagLayout());
-		heading = new JLabel ("Select 3 candidates");
+		heading = new JLabel ("Select " + Config.getREQUIRED_CANDIDATES()+ " candidates");
 		heading.setSize(new Dimension(800, 40));
-		heading.setFont (new Font ("Courier", Font.BOLD, FONT_SIZE));
+		heading.setFont (new Font ("Courier", Font.BOLD, Config.getFontSize()));
 		headingHolder.add (heading);
 		add(headingHolder);
 
@@ -83,6 +85,9 @@ public class BallotPanel extends JPanel {
 		@Override
 		public void actionPerformed(ActionEvent arg0) {
 			JCheckBox button = (JCheckBox) arg0.getSource();
+			if (BallotController.getInstance().getSelectionCount() == (Config.getREQUIRED_CANDIDATES()-1)) {
+				UIController.getInstance().disableVoting();				
+			};
 			BallotController.getInstance().updateCandidateString(this.index);
 		}
 	}

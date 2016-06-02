@@ -24,12 +24,13 @@ import controller.BallotController;
 import controller.SystemController;
 import model.Candidates;
 import model.algorithm.ElGamal;
+import model.state.StateRegistration;
+import model.state.StateTally;
+import utils.Config;
 import view.BallotPanel.VotingListener;
 import controller.UIController;
 
 public class TallyPanel extends JPanel {
-
-	private final int WIDTH = 770, HEIGHT = 90, FONT_SIZE = 20;
 	
 	private JButton btnContinue;
 	private JLabel heading;
@@ -38,20 +39,21 @@ public class TallyPanel extends JPanel {
 	private JLabel [] tallyTextLabel;
 	
 	public TallyPanel () {
-		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
-		this.setPreferredSize (new Dimension (WIDTH, HEIGHT));
 		buildPanel();
 	}
 
 	private void buildPanel() {
 		
 		System.out.println("TallyPanel");
+
+		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
+		this.setPreferredSize (new Dimension (Config.getWidth()-30, Config.getPanelHeight()));
 		
 		// Set up heading and colors
 		JPanel headingHolder = new JPanel(new GridBagLayout());
 		heading = new JLabel ("The Winners and the Losers");
 		heading.setSize(new Dimension(800, 40));
-		heading.setFont (new Font ("Courier", Font.BOLD, FONT_SIZE));
+		heading.setFont (new Font ("Courier", Font.BOLD, Config.getFontSize()));
 		headingHolder.add (heading);
 		add(headingHolder);
 
@@ -80,6 +82,8 @@ public class TallyPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {				
 				//BallotController.getInstance().performVotingProcess();
+
+				SystemController.getInstance().changeState(StateRegistration.getInstance());
 			}
 		});
 		ballotBoxPanel.add(btnContinue, BorderLayout.EAST);

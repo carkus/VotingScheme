@@ -25,13 +25,12 @@ public class TallyController {
 	} 
 	
 	public void setTallyValues() {
-		//String[] n = Candidates.getCArray();
-		
-		String[] s = SystemController.getInstance().getTallyArray();
-		
+		String[] s = SystemController.getInstance().getTallyArray();		
 		for(int i = 0; i < s.length; i++) {
 			UIController.getInstance().getTallyPanel().getTallyTextField()[i].setText(s[i]);
+			UIController.getInstance().out(Candidates.getCArray()[i] + " : " + s[i], 2);
 		}
+		
 				
 	}
 	

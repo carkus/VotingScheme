@@ -12,7 +12,7 @@ import utils.Config;
 public class VotingFrame extends JFrame {
 	
 	private MenuBarUI menuBar;
-	private VotingPanel votingPanel;
+	private MediatorView votingPanel;
 	
 	public VotingFrame() {
 		super("e-Voting System");
@@ -31,7 +31,7 @@ public class VotingFrame extends JFrame {
 		c.setBackground(Color.WHITE);
 
 		// adjust size using Dimension.
-		c.setPreferredSize(new Dimension(Config.getWidth(), Config.getHeight()));
+		//c.setPreferredSize(new Dimension(Config.getWidth(), Config.getHeight()));
 		
 		// standard JFrame startup...
 		this.setResizable(false);
@@ -48,18 +48,19 @@ public class VotingFrame extends JFrame {
     	menuBar = new MenuBarUI();
     	this.setJMenuBar(menuBar);
     	
-    	votingPanel = new VotingPanel();
+    	votingPanel = MediatorView.getInstance();
+    	votingPanel.buildPanel();
 		this.add(votingPanel, BorderLayout.CENTER);
 		
 		this.pack();
 		this.setVisible(true);
 	}
 
-	public VotingPanel getVotingPanel() {
+	public MediatorView getVotingPanel() {
 		return votingPanel;
 	}
 	
-	public void setVotingPanel(VotingPanel votingPanel) {
+	public void setVotingPanel(MediatorView votingPanel) {
 		this.votingPanel = votingPanel;
 	}
 	

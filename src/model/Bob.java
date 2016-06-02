@@ -12,15 +12,10 @@ public class Bob {
 	int r;
 
 	private String cMessage; 
-	
 	Random sc = new SecureRandom();
-	
-	private BigInteger prime;
-	
-	private BigInteger base;
-	
+	private BigInteger prime;	
+	private BigInteger base;	
 	private BigInteger privateKey;
-
 	public BigInteger publicKey;
 	
 	public Bob () { }
@@ -30,14 +25,14 @@ public class Bob {
 		BigInteger C1 = egEncrypt[0];
 		BigInteger C2 = egEncrypt[1];
 		
-        UIController.getInstance().out("Receive C1: " + C1, 0);
-        UIController.getInstance().out("Receive C2: " + C2, 0);
+        UIController.getInstance().out("\nRECEIVE  " + C1 + ", " + C2, 2);
         
         // Decryption
         BigInteger K = C1.modPow(getPrivateKey(), getPrime());        
         BigInteger KInverse = K.modInverse(getPrime());        
         BigInteger sol = C2.multiply(KInverse).mod(getPrime());
-        UIController.getInstance().out("Decrypted: " + sol, 0);
+        
+        UIController.getInstance().out("ELGAMAL  Decrypt: " + sol, 2);
 		return sol;
 	}
 	

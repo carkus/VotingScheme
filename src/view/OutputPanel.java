@@ -11,8 +11,9 @@ import java.awt.*;
 
 public class OutputPanel extends JPanel {
 
-	public JTextArea[] outputs = new JTextArea[2];
-	private JScrollPane[] scrollbars = new JScrollPane[2];
+	private static final int HEIGHT = 420;
+	public JTextArea[] outputs = new JTextArea[3];
+	private JScrollPane[] scrollbars = new JScrollPane[3];
 	
 	private JTextArea keyOutput;
 
@@ -33,14 +34,14 @@ public class OutputPanel extends JPanel {
     	
     	for (int i=0; i<outputs.length; i++) {
     		scrollbars[i] = new JScrollPane();
-    		outputs[i] = new JTextArea();
+    		outputs[i] = new JTextArea();    		
 
     		scrollbars[i].setBorder(BorderFactory.createEmptyBorder());
     		scrollbars[i].getViewport().setBackground(Color.WHITE);
     		scrollbars[i].setViewportView(outputs[i]);
     		scrollbars[i].setVerticalScrollBarPolicy(JScrollPane.VERTICAL_SCROLLBAR_AS_NEEDED);
     		scrollbars[i].getVerticalScrollBar().setUnitIncrement(50);
-    		scrollbars[i].setPreferredSize(new Dimension((Config.getWidth()-30)/outputs.length, 220));
+    		scrollbars[i].setPreferredSize(new Dimension((Config.getWidth()-40)/outputs.length, HEIGHT-40));    		
     		
     		outputs[i].setEditable(false);
     		outputs[i].setForeground(Color.BLACK);
@@ -56,8 +57,18 @@ public class OutputPanel extends JPanel {
     	}
     	
     	outputs[0].setBackground(new Color(239, 239, 239));
+    	outputs[2].setBackground(new Color(239, 239, 239));
+    	
+    	scrollbars[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
+    	
+    	TitledBorder s = new TitledBorder("Sender");
+    	scrollbars[0].setBorder(s); 
+    	
+    	TitledBorder r = new TitledBorder("Receiver");
+    	scrollbars[2].setBorder(r); 
     	
     	//keyOutput = outputs[0];
+		this.setPreferredSize (new Dimension(Config.getWidth()-10, HEIGHT));
 		this.add(outHolder);
 		
     }

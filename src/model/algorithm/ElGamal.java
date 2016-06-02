@@ -35,14 +35,14 @@ public class ElGamal {
         alice = buildAlice();
         egEncryption = alice.doEncryption(getMessage());
         
-        UIController.getInstance().out("Send C1: " + egEncryption[0], 1);
-        UIController.getInstance().out("Send C2: " + egEncryption[1], 1);
+        UIController.getInstance().out("SEND  " + egEncryption[0] + ", " + egEncryption[1], 1);
+        
         UIController.getInstance().out("", 0);
         return egEncryption;
     }
     
     public String doElGamal() {    	
-    	BigInteger decryption = bob.egDecrypt(egEncryption);  
+    	BigInteger decryption = bob.egDecrypt(egEncryption);
     	UIController.getInstance().out("", 0);  
     	String s = decryption.toString();
     	return s;
@@ -55,11 +55,12 @@ public class ElGamal {
         bob.setPrivateKey(getSecretKey());  
         bob.setPublicKey();
         
-        UIController.getInstance().out("ElGamal encrypt: " + getMessage(), 0);
-    	UIController.getInstance().out("Public Key: " + bob.getPublicKey(), 1);
-    	UIController.getInstance().out("__private__: " + bob.getPrivateKey() , 0);
-    	UIController.getInstance().out("Generator: " + bob.getBase() , 1); 
-    	UIController.getInstance().out("", 1); 
+        UIController.getInstance().out("ELGAMAL  Encrypt: " + getMessage(), 0);
+    	UIController.getInstance().out("RECEIVE  Public Key: " + bob.getPublicKey(), 0);
+    	UIController.getInstance().out("RECEIVE  Generator: " + bob.getBase() , 0); 
+    	
+    	UIController.getInstance().out("__private__: " + bob.getPrivateKey() , 2);
+    	//UIController.getInstance().out("", 1); 
     	
         return bob;
     }
@@ -74,7 +75,7 @@ public class ElGamal {
 	
 	private BigInteger getRandomPrime() {
 		Random sc = new SecureRandom();
-		BigInteger p = BigInteger.probablePrime(Config.getBitSize(), sc);
+		BigInteger p = BigInteger.probablePrime(Config.getElgamalBitSize(), sc);
 		return p;
 	}    
     
