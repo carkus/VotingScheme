@@ -94,12 +94,12 @@ public class RegistrationController {
 		
 		UIController.getInstance().clearOutputs();
 		UIController.getInstance().getRegistrationPanel().getRegOutput().setText("");
+		//send to ElGamal for confirmation
 		if(!RegistrationController.getInstance().verifyVoterWithElGamal(s)){
 			String msg = "Registration Unsuccessful.  (incorrect voter details)";
 			UIController.getInstance().getRegistrationPanel().getRegOutput().setText(msg);
 			return;
 		} 
-		//send to ElGamal for confirmation
 		if (!RegistrationController.getInstance().verifyVoterUniqueness(s)){
 			String msg = "Voter has already voted";
 			UIController.getInstance().getRegistrationPanel().getRegOutput().setText(msg);
