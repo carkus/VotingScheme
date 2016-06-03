@@ -3,6 +3,9 @@ package utils;
 import java.math.BigInteger;
 import java.util.ArrayList;
 
+import controller.UIController;
+import model.state.StateVoting;
+
 public class Helpers {
 	
 	private static Helpers instance;
@@ -24,6 +27,13 @@ public class Helpers {
 	        }	    	
 	    }
 	    return diffNum.size();
+	}	
+	
+	public void resetApplication(){
+		//setAppState(StateRegistration.getInstance());
+		UIController.getInstance().clearOutputs();
+		UIController.getInstance().getBallotPanel().resetBallot();
 	}
+	
 	
 }

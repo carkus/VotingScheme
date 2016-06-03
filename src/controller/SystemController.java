@@ -24,10 +24,11 @@ public class SystemController {
 	} 
 	
 	private SystemController(){
-		setAppState(StateRegistration.getInstance());
+		//setAppState(StateRegistration.getInstance());
+		setAppState(StateVoting.getInstance());
 		populateVoterList();
 	}
-	
+
 	public void populateVoterList() {
 		
 		System.out.println("Populating Voters...");

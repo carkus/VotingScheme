@@ -56,6 +56,11 @@ public class MainPanel extends JPanel {
 		ballotPanel.setVisible(false);
 		uiController.setBallotPanel(ballotPanel);
 		this.add(ballotPanel);	
+		
+		ReviewPanel reviewPanel = new ReviewPanel();
+		reviewPanel.setVisible(false);
+		uiController.setReviewPanel(reviewPanel);
+		this.add(reviewPanel);	
 
 		TallyPanel tallyPanel = new TallyPanel();
 		tallyPanel.setVisible(false);

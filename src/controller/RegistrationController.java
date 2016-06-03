@@ -64,6 +64,13 @@ public class RegistrationController {
 		return true;		
 	}	
 	
+	
+	/**
+	 * Because ElGamal is set up here to mimic encapsulation (and security),
+	 * We can call it straight away to mimic security across the cloud.
+	 * Here, I'm using it to get the id of the voter to check if they have voted.
+	 * 
+	 */
 	public Boolean verifyVoterUniqueness(String[] s) {
 		UIController.getInstance().out("Verifying voter uniqueness.", 0);
 		//Check database for previous vote
@@ -76,30 +83,28 @@ public class RegistrationController {
 			return false;
 		}
 		return true;		
-	}	
+	}
+	
 	public ArrayList<Voter> closeVoterAccess(ArrayList<Voter> vl, int i) {
 		vl.get(i).setHasVoted(true);
 		return vl;
 	}	
 	
 	public void checkRegistrationServer(String[] s) {
-		//send to ElGamal for confirmation
 		
-		UIController.getInstance().clear(0);
-		UIController.getInstance().clear(1);
-		UIController.getInstance().clear(2);	
-		
+		UIController.getInstance().clearOutputs();
 		UIController.getInstance().getRegistrationPanel().getRegOutput().setText("");
-		if (!RegistrationController.getInstance().verifyVoterUniqueness(s)){
-			String msg = "Voter has already voted";
-			UIController.getInstance().getRegistrationPanel().getRegOutput().setText(msg);
-			return;
-		}
 		if(!RegistrationController.getInstance().verifyVoterWithElGamal(s)){
 			String msg = "Registration Unsuccessful.  (incorrect voter details)";
 			UIController.getInstance().getRegistrationPanel().getRegOutput().setText(msg);
 			return;
 		} 
+		//send to ElGamal for confirmation
+		if (!RegistrationController.getInstance().verifyVoterUniqueness(s)){
+			String msg = "Voter has already voted";
+			UIController.getInstance().getRegistrationPanel().getRegOutput().setText(msg);
+			return;
+		}
 		SystemController.getInstance().setVoterList(closeVoterAccess(SystemController.getInstance().getVoterList(), Integer.parseInt(s[0])));
 		SystemController.getInstance().changeState(StateVoting.getInstance());
 		UIController.getInstance().out("\nVoter found.", 0);		

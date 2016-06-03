@@ -3,7 +3,7 @@ package utils;
 public class Config {
 
 	//Frame size
-	private static final int WIDTH = 900;
+	private static final int WIDTH = 1000;
 	private static final int HEIGHT = 600;
 	
 	//Algorithm parameters
@@ -15,8 +15,7 @@ public class Config {
     private static final int PRIME_LOW = 1;
     
     //Voting rules
-    private static boolean ALLOW_INCOMPLETE = true; 
-    private static boolean SIMULATE_BIAS = true; 
+    private static boolean ALLOW_INCOMPLETE = false; 
     private static int REQUIRED_CANDIDATES = 3;
 	private static int VOTERS = 10;
 	
@@ -48,12 +47,6 @@ public class Config {
 	}
 	public static int getElgamalBitSize() {
 		return ELGAMAL_BIT_SIZE;
-	}
-	public static boolean getSIMULATE_BIAS() {
-		return SIMULATE_BIAS;
-	}
-	public static void setSIMULATE_BIAS(boolean sb) {
-		SIMULATE_BIAS = sb;
 	}
 	public static boolean getALLOW_INCOMPLETE() {
 		return ALLOW_INCOMPLETE;

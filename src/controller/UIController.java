@@ -3,6 +3,7 @@ package controller;
 import javax.swing.*;
 
 import view.RegistrationPanel;
+import view.ReviewPanel;
 import view.BallotPanel;
 import view.InstructionPanel;
 import view.OptionFrame;
@@ -44,6 +45,7 @@ public class UIController {
 	private InstructionPanel instructionPanel;
 	private RegistrationPanel registrationPanel;
 	private BallotPanel ballotPanel;
+	private ReviewPanel reviewPanel;
 	private TallyPanel tallyPanel;
 	private OptionFrame optionFrame;
 
@@ -70,12 +72,19 @@ public class UIController {
 			}
 		}
 	}
+	public void enableVoting() {
+		for(int i = 0; i <ballotPanel.votingButton.length; i++) {
+			ballotPanel.votingButton[i].setEnabled(true);
+		}
+	}
     
     public void out(String msg, int i) {
     	outputs[i].append(msg + "\n");
     }
-    public void clear(int i) {
-    	outputs[i].setText("");
+    public void clearOutputs() {
+    	for (int i=0; i<outputs.length; i++) {
+    		outputs[i].setText("");    		
+    	}
     }
  
 	public RegistrationPanel getRegistrationPanel() {
@@ -112,6 +121,14 @@ public class UIController {
 
 	public OptionFrame getOptionPanel() {
 		return optionFrame;
+	}
+
+	public ReviewPanel getReviewPanel() {
+		return reviewPanel;
+	}
+
+	public void setReviewPanel(ReviewPanel reviewPanel) {
+		this.reviewPanel = reviewPanel;
 	}
 
     /**

@@ -22,16 +22,19 @@ import javax.swing.JTextField;
 
 import controller.BallotController;
 import controller.SystemController;
+import controller.TallyController;
 import model.Candidates;
 import model.algorithm.ElGamal;
 import model.state.StateRegistration;
 import model.state.StateTally;
 import utils.Config;
+import utils.Helpers;
 import view.BallotPanel.VotingListener;
 import controller.UIController;
 
 public class TallyPanel extends JPanel {
 	
+	private JButton btnTally;
 	private JButton btnContinue;
 	private JLabel heading;
 	private JTextField [] tallyTextField;
@@ -73,19 +76,29 @@ public class TallyPanel extends JPanel {
 			ballotBoxPanel.add(tallyTextField[i]);
 		}
 		
+		btnTally = new JButton("Tally Votes");
+		btnTally.setPreferredSize(new Dimension(100, 36));
+		btnTally.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				TallyController.getInstance().doTallyProcess();
+				btnTally.setEnabled(false);
+				btnContinue.setEnabled(true);
+			}
+		});
 		btnContinue = new JButton("Restart");
-		btnContinue.setPreferredSize(new Dimension(140, 36));
-		
-		//btnContinue.setBorder(BorderFactory.createLineBorder(Color.BLACK, 20));
-		
+		btnContinue.setPreferredSize(new Dimension(100, 36));
+		btnContinue.setEnabled(false);
 		btnContinue.addActionListener(new ActionListener() {
 			@Override
-			public void actionPerformed(ActionEvent e) {				
-				//BallotController.getInstance().performVotingProcess();
-
+			public void actionPerformed(ActionEvent e) {
+				btnTally.setEnabled(true);
+				btnContinue.setEnabled(false);
+				Helpers.getInstance().resetApplication();
 				SystemController.getInstance().changeState(StateRegistration.getInstance());
 			}
 		});
+		ballotBoxPanel.add(btnTally, BorderLayout.EAST);
 		ballotBoxPanel.add(btnContinue, BorderLayout.EAST);
 		add(ballotBoxPanel, BorderLayout.WEST);
 		

@@ -20,20 +20,19 @@ import java.util.*;
 import controller.UIController;
 import utils.Config;
 
-/**
- * Paillier Cryptosystem <br><br>
- * References: <br>
- * [1] Pascal Paillier, "Public-Key Cryptosystems Based on Composite Degree Residuosity Classes," EUROCRYPT'99.
- *    URL: <a href="http://www.gemplus.com/smart/rd/publications/pdf/Pai99pai.pdf">http://www.gemplus.com/smart/rd/publications/pdf/Pai99pai.pdf</a><br>
- * 
- * [2] Paillier cryptosystem from Wikipedia. 
- *    URL: <a href="http://en.wikipedia.org/wiki/Paillier_cryptosystem">http://en.wikipedia.org/wiki/Paillier_cryptosystem</a>
- * @author Kun Liu (kunliu1@cs.umbc.edu)
- * @version 1.0
- */
 public class Paillier {
 
     /**
+     * Encrypted Mesage Array is what is sent to the Tally Controller
+     * i.e. this is the Pallier process of the current vote Authority
+     * Each vote Authority gets their own encryption.
+     * This is to ensure NO Authority has knowledge of each other.
+     *  
+     */
+	private BigInteger[] emArray;  
+	private int pIndex;
+
+	/**
      * p and q are two large primes. 
      * lambda = lcm(p-1, q-1) = (p-1)*(q-1)/gcd(p-1, q-1).
      */
@@ -55,75 +54,31 @@ public class Paillier {
      */
     private int bitLength;
 
-    public Paillier() {
-    	
-    }
+    public Paillier() {}
 
     /**
      * main function
      * @param str string Array of votes
      */
     public void paillierGenerateKeys() {
-    	
-
     	//Get all keys based on bit length and prime certainty:
     	KeyGeneration(Config.getPaillierBitSize(), Config.getPrimeCertainty());
-    	
-    	/*
-    	* Test MULTIPLICATIVE homomorphic properties -> D(E(m1)^m2 mod n^2) = (m1*m2) mod n
-    	* Get unencrypted sum AND encrypted product of all messages
-    	* Return decrypted encrypted product (using log) to set up proof of polymorphism
-    	*/
-    	/*BigInteger prod = new BigInteger(mA[0].toString());    	
-    	BigInteger eprod = new BigInteger(emA[0].toString());
-    	
-    	for (int i = 1; i < 2; i++) {
-    		prod = prod.multiply(mA[i]);
-    		eprod = eprod.modPow(mA[i], nsqr);	
-    	}
-    	
-    	UIController.getInstance().out("original prod: " + prod.toString());
-    	UIController.getInstance().out("decrypted prod: " + Decryption(eprod).toString());*/
-    	
     }
     
-    public String paillierHomomorphicAddition(String[] str) {
-    	
+    public void paillierEncryptVotes(String str) {
     	//Don't continue if empty.
-    	if (str.length == 0) return null;
+    	if (str.length() == 0) return;
+    	//Create new Pallier Array of Encryptions
+    	emArray = new BigInteger[str.length()];
     	
-    	//Do encryption:
-    	UIController.getInstance().out("Votes cast: " + str.length, 1);
-    	BigInteger[] mA = new BigInteger[str.length]; 
-    	BigInteger[] emA = new BigInteger[str.length];    	
-    	
-    	for (int i = 0; i < str.length; i++) {
-    		mA[i] = new BigInteger(str[i]);
-    		UIController.getInstance().out("Vote " + (i+1) + " : " + str[i].toString(), 1);    		
-    		emA[i] = Encryption(mA[i]);
-    		UIController.getInstance().out("Encrypted Vote " + (i+1) + " : " + emA[i].toString(), 1);
-    		UIController.getInstance().out("", 1);    		
+    	for (int i = 0; i < str.length(); i++) {	
+    		String vote = String.valueOf(str.charAt(i));
+    		emArray[i] = Encryption(new BigInteger(vote));
+    		UIController.getInstance().out("Candidate: " + (1+this.getpIndex()) + "  Encrypted Vote " + (1+i) + "\n" + emArray[i].toString(), 1);
     	}
-    	
-    	/*
-    	* Test ADDITIVE homomorphic properties -> D( E(m1)*E(m2) mod n^2) = (m1 + m2) mod n
-    	* Get unencrypted sum AND encrypted product of all messages
-    	* Return decrypted encrypted product (using log) to set up proof of polymorphism
-    	*/
-    	BigInteger sum = new BigInteger(mA[0].toString());    	
-    	BigInteger esum = new BigInteger(emA[0].toString());
-    	for (int i = 1; i < str.length; i++) {
-    		sum = sum.add(mA[i]).mod(n);
-    		esum = esum.multiply(emA[i]).mod(nsqr);
-    	}
-    	UIController.getInstance().out("", 0);
-    	UIController.getInstance().out("original sum: " + sum.toString(), 0);
-    	UIController.getInstance().out("decrypted sum: " + Decryption(esum).toString(), 0);  
-    	
-    	return Decryption(esum).toString();
     	
     }
-    
+
     /**
      * Gets the ball rolling.
      */
@@ -163,23 +118,13 @@ public class Paillier {
         /*
          * Output all generated keys to the output panel before encryption 
          */
-        UIController.getInstance().out("Pallier Key generation @ " + ((Integer) bitLength).toString() + "-bits", 0);
+        UIController.getInstance().out("\nPallier Key generation @ " + ((Integer) bitLength).toString() + "-bits", 0);
         UIController.getInstance().out("  p      : " + p.toString(), 0);
         UIController.getInstance().out("  q      : " + q.toString(), 0);
         UIController.getInstance().out("  n      : " + n.toString(), 0);
         UIController.getInstance().out("  n^2    : " + nsqr.toString(), 0);
         UIController.getInstance().out("  lambda : " + lambda.toString(), 0);
     }
-
-    /**
-     * Encrypts plaintext m. ciphertext c = g^m * r^n mod n^2. This function explicitly requires random input r to help with encryption.
-     * @param m plaintext as a BigInteger
-     * @param r random plaintext to help with encryption
-     * @return ciphertext as a BigInteger
-     */
-    /*public BigInteger Encryption(BigInteger m, BigInteger r) {
-        return g.modPow(m, nsqr).multiply(r.modPow(n, nsqr)).mod(nsqr);
-    }*/
 
     /**
      * Encrypts plaintext m. ciphertext c = g^m * r^n mod n^2. This function automatically generates random input r (to help with encryption).
@@ -201,4 +146,19 @@ public class Paillier {
         return c.modPow(lambda, nsqr).subtract(BigInteger.ONE).divide(n).multiply(u).mod(n);
     }
 
+	public BigInteger[] getEmArray() {
+		return emArray;
+	}
+
+	public void setEmArray(BigInteger[] emArray) {
+		this.emArray = emArray;
+	}
+	
+    public int getpIndex() {
+		return pIndex;
+	}
+
+	public void setpIndex(int pIndex) {
+		this.pIndex = pIndex;
+	}
 }

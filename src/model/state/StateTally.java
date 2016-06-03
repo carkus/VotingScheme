@@ -20,7 +20,6 @@ public class StateTally implements IAppState {
 	@Override
 	public void startAction(SystemController s) {
 		UIController.getInstance().getTallyPanel().setVisible(true);
-		TallyController.getInstance().setTallyValues();
 	}
 
 	@Override
