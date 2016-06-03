@@ -2,6 +2,7 @@ package controller;
 
 import java.math.BigInteger;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Random;
 
 import model.Candidates;
@@ -15,6 +16,8 @@ public class TallyController {
 	private static TallyController instance;
 	private ArrayList <Paillier> eVotes;
 
+	private ArrayList<String> tallyList = new ArrayList<String>();;
+	
 	private TallyController(){}
 	
 	public static synchronized TallyController getInstance() {
@@ -25,16 +28,14 @@ public class TallyController {
 	} 
 	
 	public void setTallyValues() {
-		String[] s = SystemController.getInstance().getTallyArray();		
-		for(int i = 0; i < s.length; i++) {
-			UIController.getInstance().getTallyPanel().getTallyTextField()[i].setText(s[i]);
-			UIController.getInstance().out(Candidates.getCArray()[i] + " : " + s[i], 2);
+		for(int i = 0; i < tallyList.size(); i++) {
+			UIController.getInstance().getTallyPanel().getTallyTextField()[i].setText(tallyList.get(i));
 		}		
 	}
 	
 	public void doTallyProcess() {
 		for(int i = 0; i <eVotes.size(); i++) {
-			paillierDecryptAndSum(eVotes.get(i));
+			tallyList.add(paillierDecryptAndSum(eVotes.get(i)));
 		}
 	}	
 	
@@ -47,17 +48,14 @@ public class TallyController {
 	* Return decrypted encrypted product (using log) to set up proof of polymorphism
 	*/	
 	public String paillierDecryptAndSum(Paillier p) {
-		
 		BigInteger[] emA = p.getEmArray();
-		BigInteger esum = new BigInteger(emA[0].toString());
-		
+		BigInteger esum = new BigInteger(emA[0].toString());		
     	for (int i = 1; i < emA.length; i++) {
-    		//System.out.println("EMA : " + emA[i]);
     		esum = esum.multiply(emA[i]).mod(p.nsqr);
-    	}	
-    	UIController.getInstance().out("Decrypted tally for Candidate " + p.getpIndex() + " (" + Candidates.getCArray()[p.getpIndex()] + ") = " + p.Decryption(esum).toString(), 2);
-    	return "done";
-    	
+    	}
+    	String tally = p.Decryption(esum).toString();
+    	UIController.getInstance().out("Decrypted tally for Candidate " + p.getpIndex() + " (" + Candidates.getCArray()[p.getpIndex()] + ") = " + tally, 2);
+    	return tally;    	
     }		
 	
 	public ArrayList<Paillier> getEncryptedVotes() {

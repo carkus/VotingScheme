@@ -11,8 +11,6 @@ public class SystemController {
 	private static SystemController instance;
 	
 	private ArrayList<Voter> voterList = new ArrayList<Voter>();
-	
-	private String[] tallyArray;
 			
 	private IAppState appState;
 	
@@ -102,12 +100,4 @@ public class SystemController {
 		this.voterList = voterList;
 	}
 
-	public String[] getTallyArray() {
-		return tallyArray;
-	}
-
-	public void setTallyArray(String[] tallyArray) {
-		this.tallyArray = tallyArray;
-	}
-	
 }

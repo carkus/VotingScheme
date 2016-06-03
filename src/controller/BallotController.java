@@ -1,6 +1,5 @@
 package controller;
 
-import java.awt.event.ActionEvent;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
@@ -44,8 +43,8 @@ public class BallotController {
 	public void printVotes(String[] votes) {
 		UIController.getInstance().out("\nPaillier for authorities success", 0);
 		UIController.getInstance().out("Votes sent:", 0);
-		for (int i=1; i<votes.length; i++) {
-			UIController.getInstance().out("VOTE " + i + " : " + votes[i], 0);
+		for (int i=0; i<votes.length; i++) {
+			UIController.getInstance().out("VOTE " + (1+i) + " : " + votes[i], 0);
 		}
 	}
 	public String[] collateVotes() {
@@ -117,7 +116,6 @@ public class BallotController {
 		for(int i=0; i<bits.length; i++){
 			whole.append(bits[i]);
 		}
-		System.out.println("Other vote: " + whole.toString());
 		return whole.toString();
 	}
 	
@@ -130,11 +128,6 @@ public class BallotController {
     }
 	
 	public void setVote(JCheckBox[] cbs, int i) {
-		/*if (cbs[i].isSelected()) {
-			updateCandidateString(i, pref);
-		} else {
-			updateCandidateString(i, 0);
-		}*/
 		cbs[i].setEnabled(false);
 		updateCandidateString(i, pref);
 		int checked = checkSelectionCount(cbs);

@@ -65,13 +65,11 @@ public class TallyPanel extends JPanel {
 		String[] n = Candidates.getCArray();
 		tallyTextLabel = new JLabel[n.length];
 		tallyTextField = new JTextField[n.length];
+		
 		for(int i = 0; i <n.length; i++) {
-			
 			tallyTextLabel[i] = new JLabel(n[i]);			
 			tallyTextField[i] = new JTextField("");
 			tallyTextField[i].setPreferredSize(new Dimension(30, 20));
-			
-			//votingButton[i].addActionListener(new VotingListener(i));
 			ballotBoxPanel.add(tallyTextLabel[i]);
 			ballotBoxPanel.add(tallyTextField[i]);
 		}
@@ -82,6 +80,7 @@ public class TallyPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				TallyController.getInstance().doTallyProcess();
+				TallyController.getInstance().setTallyValues();
 				btnTally.setEnabled(false);
 				btnContinue.setEnabled(true);
 			}
@@ -112,5 +111,4 @@ public class TallyPanel extends JPanel {
 		this.tallyTextField = tallyTextField;
 	}
 
-	
 }

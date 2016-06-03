@@ -14,6 +14,7 @@ import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 
 import controller.BallotController;
 import controller.SystemController;
@@ -45,28 +46,17 @@ public class ReviewPanel extends JPanel {
 		
 		// Set up heading and colors
 		JPanel headingHolder = new JPanel(new GridBagLayout());
-		heading = new JLabel ("Select " + Config.getREQUIRED_CANDIDATES()+ " candidates");
+		heading = new JLabel ("Review Your Vote");
 		heading.setSize(new Dimension(800, 40));
 		heading.setFont (new Font ("Courier", Font.BOLD, Config.getFontSize()));
 		headingHolder.add (heading);
 		add(headingHolder);
 
-		JPanel ballotBoxPanel = new JPanel();
-		
-		String[] n = Candidates.getCArray();
-		votingButton = new JCheckBox[n.length];
-		for(int i = 0; i <n.length; i++) {
-			votingButton[i] = new JCheckBox(n[i]);
-			//votingButton[i].addActionListener(new VotingListener(i));
-			ballotBoxPanel.add(votingButton[i]);
-		}
+		JPanel reviewBoxPanel = new JPanel();
 		
 		btnContinue = new JButton("SUBMIT Vote");
-		btnContinue.setEnabled(false);
 		btnContinue.setPreferredSize(new Dimension(200, 36));
-		
-		//btnContinue.setBorder(BorderFactory.createLineBorder(Color.BLACK, 20));
-		
+
 		btnContinue.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {				
@@ -86,11 +76,25 @@ public class ReviewPanel extends JPanel {
 			}
 		});
 		
-		ballotBoxPanel.add(btnContinue, BorderLayout.EAST);
-		ballotBoxPanel.add(btnReset, BorderLayout.EAST);
-		add(ballotBoxPanel, BorderLayout.WEST);
+		reviewBoxPanel.add(btnContinue, BorderLayout.EAST);
+		reviewBoxPanel.add(btnReset, BorderLayout.EAST);
+		add(reviewBoxPanel, BorderLayout.WEST);
 		
 	}
+	
+	public void writeSelection() {
+		String[] n = Candidates.getCArray();		
+		String voteString = Candidates.getInputString();
+		StringBuilder str = new StringBuilder();
+		int cpref = Config.getREQUIRED_CANDIDATES();
+		while (cpref > 0) {
+			int i = voteString.indexOf(String.valueOf(cpref));			
+			if (i != -1) str.append("  " + n[i] + ":" + cpref);
+			cpref--;
+		}
+		heading.setText(str.toString());		
+	}
+	
 	
 
 }

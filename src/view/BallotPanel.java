@@ -65,6 +65,7 @@ public class BallotPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				SystemController.getInstance().changeState(StateReview.getInstance());
+				UIController.getInstance().getReviewPanel().writeSelection();
 			}
 		});
 		
