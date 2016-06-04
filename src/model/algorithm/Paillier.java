@@ -74,7 +74,8 @@ public class Paillier {
     	for (int i = 0; i < str.length(); i++) {	
     		String vote = String.valueOf(str.charAt(i));
     		emArray[i] = Encryption(new BigInteger(vote));
-    		UIController.getInstance().out("Candidate: " + (1+this.getpIndex()) + "  Encrypted Vote " + (1+i) + "\n" + emArray[i].toString(), 1);
+    		UIController.getInstance().out("SEND Candidate: " + (1+this.getpIndex()) + "  Encrypted Vote " + (1+i), 0);
+    		UIController.getInstance().out(emArray[i].toString(), 1);
     	}
     	
     }

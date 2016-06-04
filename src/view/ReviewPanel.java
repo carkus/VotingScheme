@@ -21,7 +21,7 @@ import controller.SystemController;
 import controller.UIController;
 import model.Candidates;
 import model.state.StateReview;
-import model.state.StateVoting;
+import model.state.StateBallot;
 import utils.Config;
 
 public class ReviewPanel extends JPanel {
@@ -72,7 +72,7 @@ public class ReviewPanel extends JPanel {
 			@Override
 			public void actionPerformed(ActionEvent e) {				
 				UIController.getInstance().getBallotPanel().resetBallot();
-				SystemController.getInstance().changeState(StateVoting.getInstance());
+				SystemController.getInstance().changeState(StateBallot.getInstance());
 			}
 		});
 		

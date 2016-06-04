@@ -17,6 +17,7 @@ import javax.swing.UIManager;
 import javax.swing.plaf.metal.MetalCheckBoxIcon;
 
 import controller.SystemController;
+import controller.UIController;
 import model.Voter;
 import model.state.IAppState;
 import utils.Config;
@@ -50,6 +51,8 @@ public class MediatorView extends JPanel {
 		contentPanel.add(instructionPanel);		
 		contentPanel.add(mainPanel);
 		contentPanel.add(outputPanel, BorderLayout.SOUTH);
+		
+		UIController.getInstance().setMainPanel(mainPanel);
 		
 		this.add(contentPanel, BorderLayout.CENTER);
 	}

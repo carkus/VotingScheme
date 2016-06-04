@@ -8,9 +8,9 @@ public class Config {
 	
 	//Algorithm parameters
     private static final int PRIME_CERTAINTY = 64;
-    private static final int ELGAMAL_BIT_SIZE = 24;
-    private static final int PAILLIER_BIT_SIZE = 128;
-    private static final int MAX_HIGH = 20000;
+    private static int ELGAMAL_BIT_SIZE = 24;
+	private static int PAILLIER_BIT_SIZE = 128;
+	private static final int MAX_HIGH = 20000;
     private static final int PRIME_HIGH = 20000;
     private static final int PRIME_LOW = 1;
     
@@ -24,6 +24,12 @@ public class Config {
 	private static final int FONT_SIZE = 20;
 	
     //ACCESSORS
+	public static void setELGAMAL_BIT_SIZE(int eLGAMAL_BIT_SIZE) {
+		ELGAMAL_BIT_SIZE = eLGAMAL_BIT_SIZE;
+	}
+	public static void setPAILLIER_BIT_SIZE(int pAILLIER_BIT_SIZE) {
+		PAILLIER_BIT_SIZE = pAILLIER_BIT_SIZE;
+	}
     public static int getPrimeCertainty() {
 		return PRIME_CERTAINTY;
 	}	

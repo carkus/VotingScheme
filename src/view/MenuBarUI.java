@@ -22,22 +22,23 @@ public class MenuBarUI extends JMenuBar {
     	System.out.println("menuBar");
 
         // Add a function menu
-        JMenu menu = new JMenu("Menu");
+        JMenu menu = new JMenu("Option");
         menu.setMnemonic(KeyEvent.VK_M);
         this.add(menu);
         
         // Allow user to reset the maximum value for all algorithms
-        JMenuItem maxValueMenuItem = new JMenuItem("Options");
-        maxValueMenuItem.addActionListener(new ActionListener() {
+        JMenuItem optionsItem = new JMenuItem("Options");
+        optionsItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //MediatorUI.getInstance().showOptionsPane();
             	UIController.getInstance().getOptionPanel().setVisible(true);
+            	UIController.getInstance().getOptionPanel().setOptionValues();
             }
         });
-        menu.add(maxValueMenuItem);
+        menu.add(optionsItem);
         
-        // Allow user to generate a random prime number within given range
-        /*JMenuItem primeMenuItem = new JMenuItem("Prime Generator");
+        /*// Allow user to generate a random prime number within given range
+        JMenuItem primeMenuItem = new JMenuItem("Prime Generator");
         primeMenuItem.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 //displayPrimeDialog();

@@ -35,17 +35,16 @@ public class StateReview implements IAppState {
 	@Override
 	public String getTitle() {
 		// TODO Auto-generated method stub
-		return "Voting";
+		return "Review your vote";
 	}
 
 	@Override
 	public String getInstructions() {
 		// TODO Auto-generated method stub
 		StringBuilder str = new StringBuilder();
-		str.append("A vote must first be verified by the \n");
-		str.append("Select 3 candidates you wish to vote for.\n");
-		str.append("Incomplete votes will NOT be counted. But WILL be allowed, in an attempt to minimise coersion.\n");
-		str.append("After validation, the votes will be encrypted and tallied using (additive homomorphic) Paillier.");
+		str.append("A vote must first be verified before it can be cast.\n");
+		str.append("Please ensure the details below match your intended vote.\n\n");
+		str.append("You may click START AGAIN if you wish to cancel this vote. No record will be kept.\n");
 		return str.toString();
 	}	
 

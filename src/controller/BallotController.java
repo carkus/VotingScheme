@@ -3,6 +3,7 @@ package controller;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
+import java.util.List;
 import java.util.Random;
 
 import javax.swing.JCheckBox;
@@ -72,8 +73,8 @@ public class BallotController {
 				s.append(add);
 			}
 			votingAuthorities[i] = String.valueOf(s);
+			simulateMixNet(votingAuthorities[i]);
 		}
-		//simulateMixNet(votingAuthorities);
 		return votingAuthorities;
     }
 	public ArrayList <Paillier> encryptVotes(String[] votes) {
@@ -90,10 +91,19 @@ public class BallotController {
 		}
 		return paillierVotes;
 	}
-		
-	public void simulateMixNet(String[] s) {		
-		Collections.shuffle(Arrays.asList(s));
-	}
+
+	public String simulateMixNet(String input){
+        List<Character> characters = new ArrayList<Character>();
+        for(char c:input.toCharArray()){
+            characters.add(c);
+        }
+        StringBuilder output = new StringBuilder(input.length());
+        while(characters.size()!=0){
+            int randPicker = (int)(Math.random()*characters.size());
+            output.append(characters.remove(randPicker));
+        }
+        return output.toString();
+    }
 	
 	public String generateDummyVote(int a) {
 		StringBuilder whole = new StringBuilder();
@@ -109,8 +119,8 @@ public class BallotController {
 			int ri = r.nextInt(Candidates.getCArray().length);
 			if (bits[ri] == "0") {
 				bits[ri] = String.valueOf(pref);
+				pref --;
 			}
-			pref --;
 		}
 		//Easy concatenate
 		for(int i=0; i<bits.length; i++){

@@ -22,8 +22,7 @@ public class SystemController {
 	} 
 	
 	private SystemController(){
-		//setAppState(StateRegistration.getInstance());
-		setAppState(StateVoting.getInstance());
+		setAppState(StateRegistration.getInstance());
 		populateVoterList();
 	}
 
@@ -71,6 +70,7 @@ public class SystemController {
 		SystemController.getInstance().endAction();
 		SystemController.getInstance().setAppState(appState);
 		SystemController.getInstance().startAction();
+		UIController.getInstance().getMainPanel().setStateTitle(getAppState().getTitle().toString());
     }
     
     // state change
@@ -89,6 +89,7 @@ public class SystemController {
 	{
     	UIController.getInstance().out("\n\n", 0);
     	UIController.getInstance().out("\n\n", 1);
+    	UIController.getInstance().out("\n\n", 2);
 		appState.endAction(this);
 	}
 

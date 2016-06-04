@@ -4,7 +4,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 
 import controller.UIController;
-import model.state.StateVoting;
+import model.state.StateBallot;
 
 public class Helpers {
 	

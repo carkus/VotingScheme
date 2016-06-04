@@ -16,9 +16,12 @@ public class Alice {
 	
 	public BigInteger[] doEncryption(String M) {
 		BigInteger[] C1_C2 = new BigInteger[2];
+		//Generate Random using secure random
 		Random sc = new SecureRandom();
 		BigInteger r = new BigInteger(Config.getElgamalBitSize(), sc);
+		//Big Integer the Message
 		BigInteger X = new BigInteger(M);
+		//C1 and C2
 		C1_C2[0] = getBobBase().modPow(r, getBobPrime());
 		C1_C2[1] = X.multiply( bobPublicKey.modPow(r, getBobPrime()) ).mod(getBobPrime());
 		return C1_C2;

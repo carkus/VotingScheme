@@ -3,15 +3,15 @@ package model.state;
 import controller.SystemController;
 import controller.UIController;
 
-public class StateVoting implements IAppState {
+public class StateBallot implements IAppState {
 
-	private StateVoting() { }
+	private StateBallot() { }
 
-	private static StateVoting instance;
+	private static StateBallot instance;
 
-	public static StateVoting getInstance() {
+	public static StateBallot getInstance() {
 		if (instance == null) {
-			instance = new StateVoting();
+			instance = new StateBallot();
 		}
 		return instance;
 	}
@@ -43,8 +43,9 @@ public class StateVoting implements IAppState {
 		// TODO Auto-generated method stub
 		StringBuilder str = new StringBuilder();
 		str.append("Registration successful. You can now place your vote.\n");
-		str.append("Select 3 candidates you wish to vote for.\n");
-		str.append("Incomplete votes will NOT be counted. But WILL be allowed, in an attempt to minimise coersion.\n");
+		str.append("Select 3 candidates in DESCENDING order of preference.\n");
+		str.append("If you make a mistake, you may click START AGIN to clear your vote.\n\n");
+		str.append("Incomplete votes will NOT be allowed for this ballot.\n");
 		str.append("After validation, the votes will be encrypted and tallied using (additive homomorphic) Paillier.");
 		return str.toString();
 	}	

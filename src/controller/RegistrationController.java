@@ -6,7 +6,7 @@ import model.Candidates;
 import model.Voter;
 import model.algorithm.ElGamal;
 import model.db.Data;
-import model.state.StateVoting;
+import model.state.StateBallot;
 import utils.Helpers;
 import view.RegistrationPanel;
 
@@ -106,7 +106,7 @@ public class RegistrationController {
 			return;
 		}
 		SystemController.getInstance().setVoterList(closeVoterAccess(SystemController.getInstance().getVoterList(), Integer.parseInt(s[0])));
-		SystemController.getInstance().changeState(StateVoting.getInstance());
+		SystemController.getInstance().changeState(StateBallot.getInstance());
 		UIController.getInstance().out("\nVoter found.", 0);		
 	}
 	

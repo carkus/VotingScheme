@@ -12,16 +12,21 @@ import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-
-//Voting rules
-/*private static boolean ALLOW_INCOMPLETE = true; 
-private static boolean SIMULATE_BIAS = true; 
-private static int REQUIRED_CANDIDATES = 3;
-private static int VOTERS = 1000;*/
+import utils.Config;
 
 public class OptionFrame extends JFrame {
+	
+	JLabel lblCandidates;
+	JTextField tfCandidates;
+	JLabel lblVoters;
+	JTextField tfVoters;
+	JLabel lblElgamalBit;
+	JTextField tfElgamalBit;
+	JLabel lblPailBit;
+	JTextField tfPailBit;
 	
 	public OptionFrame() {
 		super();
@@ -37,7 +42,7 @@ public class OptionFrame extends JFrame {
 		this.setDefaultCloseOperation(DISPOSE_ON_CLOSE);
 
 		// adjust size using Dimension.
-		this.getContentPane().setPreferredSize(new Dimension(300, 100));
+		this.getContentPane().setPreferredSize(new Dimension(300, 200));
 
 		this.setResizable(false);
 		this.setVisible(false);
@@ -56,13 +61,24 @@ public class OptionFrame extends JFrame {
 		int margin = 10;
 		optionPanel.setBorder(new EmptyBorder(margin, margin, margin, margin));		
 
+		lblCandidates = new JLabel("Number of Vote Preferences:");
+		tfCandidates = new JTextField("");
+		lblVoters = new JLabel("Number of Voters:");
+		tfVoters = new JTextField("");
+		lblElgamalBit = new JLabel("ElGamal bit-size:");
+		tfElgamalBit = new JTextField("");
+		lblPailBit = new JLabel("Paillier bit-size:");
+		tfPailBit = new JTextField("");
 		
 		JButton btOK = new JButton("OK");
-		btOK.addActionListener(new ActionListener() {
-			
+		btOK.addActionListener(new ActionListener() {			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-
+				Config.setREQUIRED_CANDIDATES(Integer.parseInt(tfCandidates.getText()));
+				Config.setVOTERS(Integer.parseInt(tfVoters.getText()));
+				Config.setELGAMAL_BIT_SIZE(Integer.parseInt(tfElgamalBit.getText()));
+				Config.setPAILLIER_BIT_SIZE(Integer.parseInt(tfPailBit.getText()));	
+				doCloseFrame();
 			}
 		});
 		
@@ -75,8 +91,14 @@ public class OptionFrame extends JFrame {
 			}
 		});
 		
-		/*optionPanel.add(lbSelect);
-		optionPanel.add(cbMapList);*/
+		optionPanel.add(lblCandidates);
+		optionPanel.add(tfCandidates);
+		optionPanel.add(lblVoters);
+		optionPanel.add(tfVoters);
+		optionPanel.add(lblElgamalBit);
+		optionPanel.add(tfElgamalBit);
+		optionPanel.add(lblPailBit);
+		optionPanel.add(tfPailBit);
 		optionPanel.add(btOK);
 		optionPanel.add(btCancel);
 		
@@ -86,5 +108,12 @@ public class OptionFrame extends JFrame {
 	
 	private void doCloseFrame(){
 		this.dispose();
+	}
+	
+	public void setOptionValues(){
+		tfCandidates.setText(String.valueOf(Config.getREQUIRED_CANDIDATES()));
+		tfVoters.setText(String.valueOf(Config.getVOTERS()));
+		tfElgamalBit.setText(String.valueOf(Config.getElgamalBitSize()));
+		tfPailBit.setText(String.valueOf(Config.getPaillierBitSize()));
 	}
 }

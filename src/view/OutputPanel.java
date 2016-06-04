@@ -62,7 +62,10 @@ public class OutputPanel extends JPanel {
     	scrollbars[1].setBorder(BorderFactory.createLineBorder(Color.BLACK, 1));
     	
     	TitledBorder s = new TitledBorder("Sender");
-    	scrollbars[0].setBorder(s); 
+    	scrollbars[0].setBorder(s);
+    	
+    	TitledBorder c = new TitledBorder("Cloud");
+    	scrollbars[1].setBorder(c); 
     	
     	TitledBorder r = new TitledBorder("Receiver");
     	scrollbars[2].setBorder(r); 

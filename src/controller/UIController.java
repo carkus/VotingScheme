@@ -6,6 +6,7 @@ import view.RegistrationPanel;
 import view.ReviewPanel;
 import view.BallotPanel;
 import view.InstructionPanel;
+import view.MainPanel;
 import view.OptionFrame;
 import view.TallyPanel;
 import view.VotingFrame;
@@ -46,6 +47,8 @@ public class UIController {
 	private RegistrationPanel registrationPanel;
 	private BallotPanel ballotPanel;
 	private ReviewPanel reviewPanel;
+	private MainPanel mainPanel;
+
 	private TallyPanel tallyPanel;
 	private OptionFrame optionFrame;
 
@@ -131,6 +134,14 @@ public class UIController {
 		this.reviewPanel = reviewPanel;
 	}
 
+	public MainPanel getMainPanel() {
+		return mainPanel;
+	}
+	
+	public void setMainPanel(MainPanel mainPanel) {
+		this.mainPanel = mainPanel;
+	}
+	
     /**
      * A helper method that help to layout the given child component on the
      * parent component with the GridBagConstraints values.

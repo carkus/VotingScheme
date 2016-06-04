@@ -7,6 +7,8 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 import javax.swing.BorderFactory;
@@ -19,7 +21,7 @@ import controller.RegistrationController;
 import controller.SystemController;
 import controller.UIController;
 import model.Voter;
-import model.state.StateVoting;
+import model.state.StateBallot;
 import utils.Config;
 
 
@@ -49,7 +51,9 @@ public class RegistrationPanel extends JPanel{
 		this.setPreferredSize (new Dimension (Config.getWidth()-30, Config.getPanelHeight()));
 		//this.setBackground(Color.RED);
 				
-		dbList = SystemController.getInstance().getVoterList();
+		dbList = SystemController.getInstance().getVoterList();		
+		
+		Collections.shuffle(dbList);
 		
 		for (int i=0; i<dbList.size(); i++) {
 			cbFirstName.addItem(dbList.get(i).getFirstName());

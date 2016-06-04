@@ -18,6 +18,8 @@ public class MainPanel extends JPanel {
 	private SystemController systemController;
 	private UIController uiController;
 	
+	private String title;
+	
 	public MainPanel () {
 		super();
 		systemController = SystemController.getInstance();
@@ -29,10 +31,7 @@ public class MainPanel extends JPanel {
 		
 		System.out.println("MainPanel");
 		
-		String title = getStateTitle();		
-    	TitledBorder titled = new TitledBorder(title);
-    	
-    	this.setBorder(titled);   		
+		setStateTitle(systemController.getAppState().getTitle().toString());
 		
 		JPanel pnContainer = new JPanel(new GridLayout(4, 1));
 		pnContainer.setPreferredSize(new Dimension(Config.getWidth()-30, Config.getHeight()-410));
@@ -44,6 +43,12 @@ public class MainPanel extends JPanel {
 
 	public String getStateTitle() {		
 		return systemController.getAppState().getTitle().toString();
+	}
+	
+	public void setStateTitle(String s) {		
+		title = s;
+		TitledBorder titled = new TitledBorder(title);    	
+    	this.setBorder(titled); 		
 	}
 	
 	public void buildSubPanels() {

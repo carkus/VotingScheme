@@ -9,7 +9,7 @@ import model.Candidates;
 import model.algorithm.ElGamal;
 import model.algorithm.Paillier;
 import model.state.StateTally;
-import model.state.StateVoting;
+import model.state.StateBallot;
 
 public class TallyController {
 	

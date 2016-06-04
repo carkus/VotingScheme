@@ -36,13 +36,17 @@ public class StateTally implements IAppState {
 	@Override
 	public String getTitle() {
 		// TODO Auto-generated method stub
-		return "Tally of votes";
+		return "Bulletin Board - Tally of votes";
 	}
 
 	@Override
 	public String getInstructions() {
 		// TODO Auto-generated method stub
-		return null;
+		StringBuilder str = new StringBuilder();
+		str.append("This will act as the Bulletin Board for the Voting System.\n");
+		str.append("Click the TALLY votes button to see a result of the election.\n\n");
+		str.append("The process uses Paillier to decrypt the sum of the values.\n");
+		return str.toString();
 	}	
 	
 
