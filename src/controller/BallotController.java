@@ -83,7 +83,7 @@ public class BallotController {
 		System.out.println("Candidates: " + votes.length);
 		for(int i=0; i<votes.length; i++){
 			Paillier pSystem = new Paillier();
-			pSystem.paillierGenerateKeys();		
+			pSystem.paillierGenerateKeys();
 			pSystem.setpIndex(i);	
 			//Perform Paillier Additive Homomorphism on each candidate value:
 			pSystem.paillierEncryptVotes(votes[i]);

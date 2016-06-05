@@ -43,7 +43,7 @@ public class StateRegistration implements IAppState {
 		StringBuilder str = new StringBuilder();
 		str.append("Before you can vote, you need to register your eligibility with your identity.\n");
 		str.append("Select your First and Last name, alongside the answer to your Secret Question, which you provided previously.\n");
-		str.append("(see Appendix C in the report for working combinations)\n\n");
+		str.append("(see Appendix D in the report for working combinations)\n\n");
 		str.append("The system will send the encrypted indexes of each item using ElGamal, and compare the results of decryption.\n");
 		str.append("If you have previously voted, you will not be able to vote again.");
 		return str.toString();

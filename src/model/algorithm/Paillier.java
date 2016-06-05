@@ -37,18 +37,22 @@ public class Paillier {
      * lambda = lcm(p-1, q-1) = (p-1)*(q-1)/gcd(p-1, q-1).
      */
     private BigInteger p,  q,  lambda;
+    
     /**
      * n = p*q, where p and q are two large primes.
      */
     public BigInteger n;
+    
     /**
      * nsquare = n*n
      */
     public BigInteger nsqr;
+    
     /**
      * a random integer in Z*_{n^2} where gcd (L(g^lambda mod n^2), n) = 1.
      */
     private BigInteger g;
+    
     /**
      * number of bits of modulus
      */
@@ -106,7 +110,7 @@ public class Paillier {
         
         //Carmichael's function:
         lambda = p.subtract(BigInteger.ONE).multiply(q.subtract(BigInteger.ONE)).divide(
-                p.subtract(BigInteger.ONE).gcd(q.subtract(BigInteger.ONE)));
+        		p.subtract(BigInteger.ONE).gcd(q.subtract(BigInteger.ONE)));
         
         /* check whether g is good.*/
         if (g.modPow(lambda, nsqr).subtract(BigInteger.ONE).divide(n).gcd(n).intValue() != 1) {
@@ -143,8 +147,8 @@ public class Paillier {
      * @return plaintext as a BigInteger
      */
     public BigInteger Decryption(BigInteger c) {
-        BigInteger u = g.modPow(lambda, nsqr).subtract(BigInteger.ONE).divide(n).modInverse(n);
-        return c.modPow(lambda, nsqr).subtract(BigInteger.ONE).divide(n).multiply(u).mod(n);
+        BigInteger mu = g.modPow(lambda, nsqr).subtract(BigInteger.ONE).divide(n).modInverse(n);
+        return c.modPow(lambda, nsqr).subtract(BigInteger.ONE).divide(n).multiply(mu).mod(n);
     }
 
 	public BigInteger[] getEmArray() {
