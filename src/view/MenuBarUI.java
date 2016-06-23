@@ -22,7 +22,7 @@ public class MenuBarUI extends JMenuBar {
     	System.out.println("menuBar");
 
         // Add a function menu
-        JMenu menu = new JMenu("Option");
+        JMenu menu = new JMenu("Menu");
         menu.setMnemonic(KeyEvent.VK_M);
         this.add(menu);
         
