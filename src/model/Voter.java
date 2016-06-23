@@ -1,7 +1,6 @@
 package model;
 
-public class Voter implements IVoter {
-	
+public class Voter implements IVoter {	
 	
 	private String firstName;
 	private String lastName;

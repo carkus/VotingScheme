@@ -6,7 +6,6 @@ import java.util.Random;
 import controller.UIController;
 import model.Alice;
 import model.Bob;
-import model.Convert;
 import utils.Config;
 
 

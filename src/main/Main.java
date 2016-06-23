@@ -17,10 +17,7 @@ public class Main {
 		uiController.setupUI();
 
 		systemController = SystemController.getInstance();
-		systemController.setupVoter();
-		//systemController.populateCandidateString();
-		//systemController.doVoting();
-		
+		systemController.setupVoter();		
 				
 		System.out.println("All Controllers constructed");
 		
